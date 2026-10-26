@@ -8,8 +8,6 @@ import {
   FolderGit2,
   Send,
   Bot,
-  Volume2,
-  VolumeX,
   Menu,
   X,
   Download,
@@ -27,7 +25,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAIModal, onOpenCvModal }) 
   const { isLight, toggleTheme } = useTheme()
   const [scrolled, setScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [soundEnabled, setSoundEnabled] = useState(false)
   const [currentTime, setCurrentTime] = useState('')
 
   useEffect(() => {
@@ -56,11 +53,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAIModal, onOpenCvModal }) 
       clearInterval(timer)
     }
   }, [])
-
-  const toggleSound = () => {
-    const nextState = sound.toggle()
-    setSoundEnabled(nextState)
-  }
 
   const navLinks = [
     { label: 'Profile', href: '#mission-profile', icon: Compass, code: '01' },

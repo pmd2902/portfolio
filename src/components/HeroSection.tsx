@@ -288,7 +288,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenCvModal }) => {
               }}
             >
               <img
-                src="/planet.jpg"
+                src={isLight ? '/planet-solar.jpg' : '/planet.jpg'}
                 alt="Exoplanet orbit"
                 className="w-full h-full object-cover animate-spin-slow"
               />
@@ -322,7 +322,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenCvModal }) => {
               {/* Astronaut image with floating animation */}
               <div className="w-full h-full rounded-xl overflow-hidden relative animate-float">
                 <img
-                  src="/astronaut.jpg"
+                  src={isLight ? '/astronaut-solar.jpg' : '/astronaut.jpg'}
                   alt="Astronaut Phan Minh Duc exploring developer universe"
                   className="w-full h-full object-cover rounded-xl transition-transform duration-700 group-hover:scale-105"
                 />
@@ -330,7 +330,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenCvModal }) => {
                 {/* Subtle vignette overlay */}
                 <div
                   className={`absolute inset-0 bg-gradient-to-t via-transparent to-transparent ${
-                    isLight ? 'from-amber-950/20 opacity-30' : 'from-[#020617] opacity-60'
+                    isLight ? 'from-amber-900/10 opacity-20' : 'from-[#020617] opacity-60'
                   }`}
                 />
               </div>
