@@ -90,22 +90,24 @@ const BILINGUAL_KNOWLEDGE_BASE: KnowledgeItem[] = [
   {
     id: 's3corp',
     intents: [
-      's3corp', 'synapse', 'synapse 4', 'razer', 'macro', 'gaming', 'desktop', 'electron', 'hien tai', 'dang lam'
+      's3corp', 'synapse', 'synapse 4', 'razer', 'macro', 'gaming', 'desktop', 'electron', 'hien tai', 'dang lam', 'codebase', 'source code', 'he thong lon', 'teamwork', 'xuyen quoc gia', 'singapore'
     ],
     answerVi:
-      'Tại S3Corp (02/2025 – Hiện tại), Đức tham gia dự án Synapse 4 (Ứng dụng desktop điều khiển thiết bị gaming ngoại vi đa nền tảng):\n\n' +
-      '1. Frontend Lead cho Macro Module: Thiết kế kỹ thuật end-to-end và phát triển tính năng ghi macro phức tạp, chỉnh sửa chuỗi hành động và gán phím thiết bị.\n' +
-      '2. Kiến trúc: Electron, React.js, TypeScript, Micro-Frontend.\n' +
-      '3. Cầu nối phần cứng: Dùng BroadcastChannel truyền thông hai chiều thời gian thực giữa middleware phần cứng và UI.\n' +
-      '4. Tối ưu hiệu năng: Giảm ~15% UI lag và tiêu hao RAM nhờ React memoization, virtualized rendering và event throttling khi nhận luồng dữ liệu phần cứng tần suất cao.\n' +
-      '5. Làm việc cùng team quốc tế tại Singapore và theo dõi pipeline Jenkins CI/CD.',
+      'Tại S3Corp (02/2025 – Hiện tại), Đức tham gia dự án Synapse 4 (Bộ ứng dụng desktop điều khiển thiết bị gaming ngoại vi quy mô lớn):\n\n' +
+      '1. Làm chủ source code lớn & kiến trúc hệ thống: Quản lý và điều hướng trong codebase đồ sộ (Enterprise-scale Monorepo / Multi-module Electron & React), nắm vững luồng dữ liệu phức tạp giữa Micro-Frontends và Native Middleware C++.\n' +
+      '2. Frontend Lead cho Macro Module: Thiết kế kỹ thuật end-to-end, viết RFCs và phát triển tính năng ghi macro, chỉnh sửa chuỗi hành động và gán phím thiết bị.\n' +
+      '3. Teamwork xuyên quốc gia & Giao tiếp kỹ thuật: Phối hợp hàng ngày bằng tiếng Anh với đội ngũ Product Managers, C++ Middleware engineers và QA tại Singapore & Việt Nam; tham gia code review nghiêm ngặt và giải quyết blocker đa múi giờ.\n' +
+      '4. Cầu nối phần cứng: Dùng BroadcastChannel & IPC truyền thông hai chiều thời gian thực giữa middleware phần cứng và UI.\n' +
+      '5. Tối ưu hiệu năng: Giảm ~15% UI lag và tiêu hao RAM nhờ React memoization, virtualized rendering và event throttling khi nhận luồng dữ liệu phần cứng tần suất cao.\n' +
+      '6. Triển khai liên tục: Giám sát pipeline Jenkins CI/CD, đảm bảo các bản release diễn ra trơn tru đúng tiến độ.',
     answerEn:
-      'At S3Corp (02/2025 – Present), Duc engineers Synapse 4 (Cross-platform gaming peripheral desktop application):\n\n' +
-      '1. Frontend Lead for Macro Module: Spearheaded end-to-end technical design and delivery for macro recording, sequence editing, and key-binding.\n' +
-      '2. Architecture: Electron, React.js, TypeScript, Micro-Frontend.\n' +
-      '3. Hardware Link: Real-time bidirectional communication via BroadcastChannel between middleware and UI.\n' +
-      '4. Performance Optimization: Reduced UI lag and memory overhead by ~15% using React memoization, virtualized rendering, and event throttling.\n' +
-      '5. Collaboration: Daily Agile sprints with international teams in Singapore and Jenkins CI/CD pipeline monitoring.',
+      'At S3Corp (02/2025 – Present), Duc engineers Synapse 4 (Enterprise-scale cross-platform gaming peripheral desktop suite):\n\n' +
+      '1. Large-Scale Codebase & Deep System Mastery: Navigating and governing an extensive enterprise-grade desktop codebase (Micro-Frontends within Electron), demonstrating comprehensive mastery over complex data flows and native IPC boundaries.\n' +
+      '2. Frontend Lead for Macro Module: Spearheaded end-to-end technical design, architecture RFCs, and delivery for macro recording, sequence editing, and key-binding.\n' +
+      '3. Cross-Border Collaboration & High-Impact Teamwork: Daily English communication and Agile sprint coordination with international Product Managers, C++ Native Middleware engineers, and QA teams across Singapore and Vietnam.\n' +
+      '4. Hardware IPC Link: Real-time bidirectional communication via BroadcastChannel between C++ middleware and UI.\n' +
+      '5. Performance Optimization: Reduced UI lag and memory overhead by ~15% using React memoization, virtualized rendering, and event throttling on high-frequency hardware streams.\n' +
+      '6. CI/CD Governance: Monitored Jenkins CI/CD pipelines to ensure seamless, predictable release deliveries across timezones.',
   },
   {
     id: 'performance_lag',

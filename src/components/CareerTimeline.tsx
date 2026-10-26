@@ -57,7 +57,7 @@ export const CareerTimeline: React.FC = () => {
       stage: 'FLAGSHIP MISSION',
       title: 'Frontend Developer & Macro Lead',
       org: 'S3Corp (Synapse 4)',
-      desc: 'Macro Module Frontend Lead for Razer Synapse 4 desktop app. BroadcastChannel hardware bridge, ~15% UI lag reduction, Singapore agile teams.',
+      desc: 'Macro Module Frontend Lead for Razer Synapse 4 desktop app. Large-scale enterprise codebase, cross-border teamwork with Singapore, BroadcastChannel bridge, ~15% UI lag reduction.',
       icon: Gamepad2,
       badge: 'CURRENT FLIGHT',
       highlight: true,

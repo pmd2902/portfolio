@@ -286,18 +286,19 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
     location: 'Ho Chi Minh City (Collaborating with Singapore)',
     isCurrent: true,
     description:
-      'Spearheading frontend development for enterprise gaming peripherals desktop suite Synapse 4, serving as Macro Module Frontend Lead.',
+      'Spearheading frontend development for enterprise gaming peripherals desktop suite Synapse 4 within a massive distributed codebase, serving as Macro Module Frontend Lead while partnering closely with multinational engineering teams across Vietnam and Singapore.',
     projects: [
       {
         name: 'Synapse 4 (Cross-Platform Gaming Device Desktop Application)',
         overview:
-          'High-performance cross-platform gaming peripheral desktop application orchestrating complex lighting, telemetry, and hardware macro workflows.',
+          'Mission-critical, enterprise-grade cross-platform desktop suite orchestrating peripheral hardware controls, telemetry streaming, and macro automation across a massive multi-module codebase.',
         bullets: [
-          'Engineered and maintained scalable frontend architecture using Electron, React.js, TypeScript, and Micro-Frontend.',
-          'Served as Frontend Lead for the Macro Module, spearheading end-to-end technical design and feature delivery for complex macro recording, sequence editing, and device key-binding.',
-          'Implemented real-time bidirectional communication between hardware middleware and the UI via BroadcastChannel, ensuring responsive device feedback and high system stability.',
-          'Optimized rendering performance for high-frequency hardware updates (device telemetry, lighting effects, macro profiles) using React memoization, virtualized rendering, and event throttling, reducing UI lag and memory overhead by ~15%.',
-          'Collaborated closely with international product and engineering teams in Singapore; monitored Jenkins CI/CD pipelines and resolved build/packaging issues to maintain smooth release schedules.',
+          'Mastered and navigated a massive enterprise codebase (multi-module Electron + React desktop ecosystem), maintaining deep comprehension of complex system architecture, IPC layers, and strict modular boundaries.',
+          'Served as Frontend Lead for the Macro Module, spearheading end-to-end technical design, architectural RFCs, and feature delivery for complex macro recording, sequence editing, and device key-binding.',
+          'Collaborated seamlessly in a cross-border distributed engineering setup, partnering daily with international Product Managers, C++ Native Middleware engineers, and QA teams across Singapore and Vietnam via English Agile sprints.',
+          'Implemented real-time bidirectional communication between C++ hardware middleware and UI via BroadcastChannel & IPC protocols, ensuring zero-latency device synchronization and high stability.',
+          'Optimized high-frequency telemetry rendering (lighting cycles, key-presses, macro triggers) using React memoization, virtualized lists, and event throttling, driving a ~15% reduction in UI lag and memory overhead.',
+          'Maintained rapid, reliable deployment cadence via Jenkins CI/CD pipelines, collaborating across timezones to troubleshoot packaging and build pipelines for timely release deliveries.',
         ],
         stack: ['Electron.js', 'React.js', 'TypeScript', 'Micro-Frontend', 'BroadcastChannel', 'Jenkins', 'Jira'],
       },
@@ -390,33 +391,36 @@ export const PROJECTS_DATA: ProjectMission[] = [
     role: 'Frontend Developer & Macro Lead',
     badge: 'FLAGSHIP DESKTOP',
     description:
-      'Scalable cross-platform desktop application orchestrating hardware device key-binding, high-frequency telemetry, and macro sequences.',
+      'Enterprise-grade cross-platform desktop suite orchestrating hardware key-binding, high-frequency telemetry, and macro sequences across a massive multi-module codebase with multinational engineering teams.',
     objectives: [
-      'Architect modular desktop frontend within Electron for cross-platform peripheral controls.',
-      'Lead engineering for the Macro Module from technical design to production delivery.',
-      'Bridge native hardware middleware with frontend UI without lag or memory leaks.',
+      'Master and navigate a massive enterprise-scale desktop architecture across Electron and modular Micro-Frontends.',
+      'Lead engineering for the Macro Module from technical design RFCs to production-grade deployment.',
+      'Collaborate cross-functionally and cross-border with international teams in Singapore (C++ Middleware, QA, Product Management).',
+      'Bridge native hardware middleware with frontend UI with zero latency, eliminating memory leaks and frame drops.',
     ],
     achievements: [
-      'Served as Frontend Lead for the Macro Module, spearheading complex sequence editing and key-binding.',
-      'Reduced UI lag and memory overhead by ~15% via React memoization, virtualized rendering, and event throttling.',
-      'Engineered real-time bidirectional communication via BroadcastChannel between middleware and UI.',
-      'Maintained smooth release schedules with Jenkins CI/CD across Singapore and Vietnam teams.',
+      'Mastered and navigated a massive enterprise codebase, demonstrating deep system comprehension across multi-tiered micro-frontends, complex state, and native IPC layers.',
+      'Served as Frontend Lead for the Macro Module, spearheading technical design, sequence editing workflows, and device key-binding.',
+      'Drove effective cross-border teamwork and technical communication with Singapore engineering hubs, collaborating with C++ middleware devs and QA for seamless integration.',
+      'Reduced UI lag and memory overhead by ~15% via React memoization, virtualized rendering, and hardware event throttling.',
+      'Maintained smooth, continuous release schedules with Jenkins CI/CD pipelines across Singapore and Vietnam development cycles.',
     ],
-    technologies: ['Electron.js', 'React.js', 'TypeScript', 'Micro-Frontend', 'BroadcastChannel', 'Jenkins', 'Jira'],
+    technologies: ['Electron.js', 'React.js', 'TypeScript', 'Micro-Frontend', 'BroadcastChannel', 'Jenkins', 'Jira', 'Cross-Border Teamwork'],
     telemetry: [
+      { label: 'Codebase Scale', value: 'Enterprise Monorepo' },
+      { label: 'Cross-Border Team', value: 'Singapore & VN Sprints' },
       { label: 'Latency Overhead', value: '-15% Memory & Lag' },
-      { label: 'Architecture', value: 'Micro-Frontend' },
-      { label: 'Hardware Channel', value: 'BroadcastChannel' },
+      { label: 'Hardware Channel', value: 'BroadcastChannel IPC' },
     ],
     caseStudy: {
       challenge:
-        'High-frequency hardware telemetry updates (lighting cycles, DPI tracking, macro sequence triggers) overloaded the React rendering loop, causing UI frame drops and memory spikes.',
+        'Navigating an extensive, multi-tier enterprise codebase with high-frequency hardware telemetry updates (lighting cycles, DPI tracking, macro triggers) that previously overloaded the React render loop. Crucially, the mission required coordinating across diverse functional domains (C++ native middleware, firmware, QA) and cross-border international stakeholders in Singapore under strict sprint milestones.',
       solution:
-        'Introduced event throttling on incoming hardware streams, isolated re-rendering trees using React memoization, and implemented virtualized lists for long macro event sequences.',
+        'Established deep architectural comprehension of the massive desktop system to implement clean module boundaries and virtualized list rendering. Standardized bidirectional IPC communication via BroadcastChannel with C++ middleware engineers, introduced event throttling on high-frequency streams, and actively drove daily cross-border technical syncs, code reviews, and bilingual communication between Vietnam and Singapore teams.',
       architecture:
-        'Electron desktop shell hosting independent Micro-Frontend modules connected to hardware middleware via zero-latency BroadcastChannel.',
+        'Large-scale enterprise Electron desktop application hosting decoupled Micro-Frontend modules, communicating with low-level C++ hardware middleware through zero-latency BroadcastChannel/IPC bridges and synchronized via multinational Jenkins CI/CD pipelines.',
       impact:
-        'Yielded ~15% reduction in memory overhead and eliminated noticeable UI stutter during high-intensity gaming peripheral operations.',
+        'Achieved a ~15% reduction in memory overhead and eliminated noticeable UI stutter during high-intensity gaming peripheral operations, while ensuring 100% on-time release milestones backed by seamless cross-border collaboration and high team trust.',
     },
   },
   {
@@ -547,12 +551,12 @@ export const AI_KNOWLEDGE_BASE = [
   {
     keywords: ['who', 'about', 'duc', 'phan', 'role', 'experience', 'background', 'intro'],
     answer:
-      'Phan Minh Duc is a Middle Front-End Developer with nearly 4 years of industry experience. He specializes in scalable web and cross-platform desktop applications (React, Next.js, Electron.js), Micro-Frontends (Module Federation), high-frequency hardware rendering optimization, and real-time data streaming (WebSockets, BroadcastChannel). He is currently at S3Corp, leading frontend development for the Macro Module in Synapse 4, collaborating with teams in Singapore.',
+      'Phan Minh Duc is a Middle Front-End Developer with nearly 4 years of industry experience. He specializes in scalable web and cross-platform desktop applications (React, Next.js, Electron.js), Micro-Frontends (Module Federation), high-frequency hardware rendering optimization, and real-time data streaming (WebSockets, BroadcastChannel). He is currently at S3Corp, navigating a massive enterprise codebase as Macro Module Frontend Lead in Synapse 4, collaborating closely with international engineering teams across Vietnam and Singapore.',
   },
   {
-    keywords: ['synapse', 'razer', 's3corp', 'gaming', 'macro', 'desktop', 'electron'],
+    keywords: ['synapse', 'razer', 's3corp', 'gaming', 'macro', 'desktop', 'electron', 'codebase', 'teamwork', 'monorepo'],
     answer:
-      'At S3Corp (2/2025 – Present), Duc works on Synapse 4, a cross-platform gaming peripheral desktop application built with Electron, React.js, TypeScript, and Micro-Frontends. As Frontend Lead for the Macro Module, he spearheaded macro recording, sequence editing, and key-binding. He integrated real-time bidirectional BroadcastChannel communication and reduced UI lag and memory overhead by ~15% via React memoization, virtualized rendering, and event throttling.',
+      'At S3Corp (2/2025 – Present), Duc works on Synapse 4, an enterprise gaming peripheral desktop suite built with Electron, React.js, TypeScript, and Micro-Frontends. As Frontend Lead for the Macro Module, he mastered a massive enterprise codebase with comprehensive system comprehension, spearheading macro recording and key-binding. He integrated real-time BroadcastChannel IPC communication with C++ native middleware, reduced UI lag and memory overhead by ~15%, and collaborated daily in cross-border Agile sprints with engineering teams in Singapore.',
   },
   {
     keywords: ['lag', 'optimization', 'performance', 'memory', '15%', 'render'],

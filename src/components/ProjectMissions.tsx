@@ -274,7 +274,9 @@ export const ProjectMissions: React.FC = () => {
 
               {/* Telemetry Metrics Bar */}
               <div
-                className={`grid grid-cols-1 sm:grid-cols-3 gap-3 p-3.5 rounded-xl border ${
+                className={`grid grid-cols-2 ${
+                  selectedMission.telemetry.length >= 4 ? 'sm:grid-cols-4' : 'sm:grid-cols-3'
+                } gap-3 p-3.5 rounded-xl border ${
                   isLight
                     ? 'bg-amber-50/70 border-amber-200/90 text-slate-800'
                     : 'bg-slate-900/80 border border-slate-800'
