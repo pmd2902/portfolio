@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { PROJECTS_DATA } from '../data/profile'
 import type { ProjectMission } from '../data/profile'
 import { sound } from '../lib/sound'
+import { useTheme } from '../context/ThemeContext'
 import {
   FolderGit2,
   Cpu,
@@ -16,6 +17,7 @@ import {
 import { REAL_TECH_ICON_MAP } from './TechIcons'
 
 export const ProjectMissions: React.FC = () => {
+  const { isLight } = useTheme()
   const [selectedMission, setSelectedMission] = useState<ProjectMission | null>(null)
 
   const handleOpenCaseStudy = (mission: ProjectMission) => {
@@ -29,73 +31,137 @@ export const ProjectMissions: React.FC = () => {
   }
 
   return (
-    <section id="missions" className="py-24 relative px-4 sm:px-6 lg:px-8 border-t border-sky-500/10">
+    <section
+      id="missions"
+      className={`py-24 relative px-4 sm:px-6 lg:px-8 border-t ${
+        isLight ? 'border-amber-200/80' : 'border-sky-500/10'
+      }`}
+    >
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-sky-500/15 pb-6">
+        <div
+          className={`flex flex-col md:flex-row md:items-end justify-between gap-4 border-b pb-6 ${
+            isLight ? 'border-amber-200' : 'border-sky-500/15'
+          }`}
+        >
           <div>
-            <div className="inline-flex items-center gap-2 text-xs font-mono text-sky-400 uppercase tracking-widest mb-1">
+            <div
+              className={`inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest mb-1 ${
+                isLight ? 'text-amber-700 font-bold' : 'text-sky-400'
+              }`}
+            >
               <FolderGit2 className="w-3.5 h-3.5" />
               <span>Section // 04</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-heading font-bold text-white tracking-tight">
-              MISSIONS / PROJECTS
+            <h2
+              className={`text-3xl sm:text-5xl font-heading font-bold tracking-tight ${
+                isLight ? 'text-slate-900' : 'text-white'
+              }`}
+            >
+              DISCOVERED MISSIONS
             </h2>
-            <p className="text-sm sm:text-base text-slate-400 font-mono mt-1">
-              Deep-Space Engineering Deployments & Case Studies
+            <p
+              className={`text-sm sm:text-base font-mono mt-1 ${
+                isLight ? 'text-slate-600' : 'text-slate-400'
+              }`}
+            >
+              Featured Production Architectures, Cross-Platform Desktop & Enterprise Platforms
             </p>
           </div>
-          <div className="font-mono text-xs text-slate-400">
-            DISCOVERED MISSIONS: <span className="text-sky-300 font-semibold">{PROJECTS_DATA.length} FLIGHTS</span>
+          <div className={`font-mono text-xs ${isLight ? 'text-slate-600' : 'text-slate-400'}`}>
+            FLAGSHIP DEPLOYMENTS:{' '}
+            <span className={`font-semibold ${isLight ? 'text-amber-700 font-bold' : 'text-sky-300'}`}>
+              {PROJECTS_DATA.length} PROJECTS
+            </span>
           </div>
         </div>
 
-        {/* Missions Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {PROJECTS_DATA.map((mission: ProjectMission) => {
+        {/* Project Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {PROJECTS_DATA.map((mission) => {
             return (
               <div
                 key={mission.id}
                 onClick={() => handleOpenCaseStudy(mission)}
-                className="group relative glass-panel p-6 sm:p-7 rounded-2xl border border-slate-800/90 hover:border-sky-400/40 hover:shadow-[0_0_30px_rgba(56,189,248,0.15)] transition-all duration-300 flex flex-col justify-between cursor-pointer transform hover:-translate-y-1"
+                className={`group rounded-2xl border p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 cursor-pointer ${
+                  isLight
+                    ? 'bg-white hover:bg-amber-50/20 border-amber-200/90 hover:border-amber-400 shadow-sm hover:shadow-xl hover:-translate-y-1'
+                    : 'glass-panel border-sky-500/20 hover:border-sky-400/60 hover:shadow-2xl hover:shadow-sky-950/60 hover:-translate-y-1'
+                }`}
               >
-                {/* Top Mission Code & Badge */}
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
-                    <span className="text-xs font-mono text-sky-400 tracking-wider">
-                      [{mission.code}]
+                  {/* Card Header with Badges */}
+                  <div className="flex items-center justify-between gap-2">
+                    <span
+                      className={`font-mono text-xs px-2.5 py-1 rounded font-bold border ${
+                        isLight
+                          ? 'bg-amber-100 text-amber-800 border-amber-300'
+                          : 'bg-sky-500/10 text-sky-400 border-sky-500/30'
+                      }`}
+                    >
+                      {mission.code}
                     </span>
-                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-sky-950 text-sky-300 border border-sky-500/30">
-                      {mission.badge}
+                    <span
+                      className={`text-[11px] font-mono border px-2 py-0.5 rounded ${
+                        isLight
+                          ? 'text-slate-600 border-amber-200 bg-amber-50/60'
+                          : 'text-slate-400 border-slate-800'
+                      }`}
+                    >
+                      {mission.period}
                     </span>
                   </div>
 
-                  {/* Title & Subtitle */}
                   <div>
-                    <h3 className="text-xl sm:text-2xl font-heading font-bold text-white group-hover:text-sky-300 transition-colors">
+                    <h3
+                      className={`text-xl font-heading font-bold transition-colors ${
+                        isLight
+                          ? 'text-slate-900 group-hover:text-amber-700'
+                          : 'text-white group-hover:text-sky-300'
+                      }`}
+                    >
                       {mission.name}
                     </h3>
-                    <p className="text-xs sm:text-sm font-mono text-slate-400 mt-1">
-                      {mission.subtitle} &bull; <span className="text-sky-400/90">{mission.company}</span>
+                    <p
+                      className={`text-xs font-mono mt-0.5 ${
+                        isLight ? 'text-amber-700 font-semibold' : 'text-sky-300'
+                      }`}
+                    >
+                      {mission.subtitle} &bull; {mission.company}
                     </p>
                   </div>
 
-                  {/* Description */}
-                  <p className="text-sm text-slate-300 leading-relaxed font-sans line-clamp-3">
+                  <p
+                    className={`text-xs sm:text-sm font-sans line-clamp-3 leading-relaxed ${
+                      isLight ? 'text-slate-600' : 'text-slate-300'
+                    }`}
+                  >
                     {mission.description}
                   </p>
 
-                  {/* Telemetry Highlights */}
-                  <div className="grid grid-cols-3 gap-2 py-2">
+                  {/* Telemetry Metric Highlights */}
+                  <div className="grid grid-cols-2 gap-2 pt-2">
                     {mission.telemetry.map((t, idx) => (
                       <div
                         key={idx}
-                        className="p-2.5 rounded-lg bg-slate-900/80 border border-slate-800/80"
+                        className={`p-2.5 rounded-lg border ${
+                          isLight
+                            ? 'bg-amber-50/70 border-amber-200/80 text-slate-800'
+                            : 'bg-slate-900/80 border-slate-800/80'
+                        }`}
                       >
-                        <span className="block text-[9px] font-mono text-slate-400 uppercase truncate">
+                        <span
+                          className={`block text-[9px] font-mono uppercase truncate ${
+                            isLight ? 'text-slate-500' : 'text-slate-400'
+                          }`}
+                        >
                           {t.label}
                         </span>
-                        <span className="text-xs font-mono font-bold text-sky-300 truncate block mt-0.5">
+                        <span
+                          className={`text-xs font-mono font-bold truncate block mt-0.5 ${
+                            isLight ? 'text-amber-700' : 'text-sky-300'
+                          }`}
+                        >
                           {t.value}
                         </span>
                       </div>
@@ -109,7 +175,11 @@ export const ProjectMissions: React.FC = () => {
                       return (
                         <span
                           key={tIdx}
-                          className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-mono bg-slate-900 text-slate-300 border border-slate-800 group-hover:border-sky-500/20"
+                          className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-mono border ${
+                            isLight
+                              ? 'bg-white text-slate-800 border-amber-200/90 shadow-xs'
+                              : 'bg-slate-900 text-slate-300 border border-slate-800 group-hover:border-sky-500/20'
+                          }`}
                         >
                           {TechIcon && <TechIcon className="w-3.5 h-3.5 shrink-0" />}
                           <span>{tech}</span>
@@ -117,7 +187,7 @@ export const ProjectMissions: React.FC = () => {
                       )
                     })}
                     {mission.technologies.length > 5 && (
-                      <span className="text-[10px] font-mono text-slate-500">
+                      <span className={`text-[10px] font-mono ${isLight ? 'text-slate-500' : 'text-slate-500'}`}>
                         +{mission.technologies.length - 5} more
                       </span>
                     )}
@@ -125,11 +195,26 @@ export const ProjectMissions: React.FC = () => {
                 </div>
 
                 {/* Card Footer CTA */}
-                <div className="pt-6 mt-6 border-t border-slate-800/80 flex items-center justify-between">
-                  <span className="text-xs font-mono text-slate-400 group-hover:text-white transition-colors">
-                    Role: <span className="text-sky-300">{mission.role}</span>
+                <div
+                  className={`pt-6 mt-6 border-t flex items-center justify-between ${
+                    isLight ? 'border-amber-200/70' : 'border-slate-800/80'
+                  }`}
+                >
+                  <span
+                    className={`text-xs font-mono transition-colors ${
+                      isLight ? 'text-slate-600' : 'text-slate-400 group-hover:text-white'
+                    }`}
+                  >
+                    Role:{' '}
+                    <span className={isLight ? 'text-amber-700 font-semibold' : 'text-sky-300'}>
+                      {mission.role}
+                    </span>
                   </span>
-                  <div className="inline-flex items-center gap-1.5 text-xs font-mono text-sky-400 font-semibold group-hover:translate-x-1 transition-transform">
+                  <div
+                    className={`inline-flex items-center gap-1.5 text-xs font-mono font-semibold group-hover:translate-x-1 transition-transform ${
+                      isLight ? 'text-amber-700' : 'text-sky-400'
+                    }`}
+                  >
                     <span>Inspect Case Study</span>
                     <ArrowRight className="w-4 h-4" />
                   </div>
@@ -141,15 +226,27 @@ export const ProjectMissions: React.FC = () => {
 
         {/* Detailed Case Study Modal */}
         {selectedMission && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#020617]/90 backdrop-blur-xl animate-fade-in overflow-y-auto">
+          <div
+            className={`fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-xl animate-fade-in overflow-y-auto ${
+              isLight ? 'bg-black/40 backdrop-blur-sm' : 'bg-[#020617]/90'
+            }`}
+          >
             <div
-              className="relative w-full max-w-3xl glass-panel-glow rounded-2xl border border-sky-400/40 p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto my-8 shadow-2xl shadow-sky-950"
+              className={`relative w-full max-w-3xl rounded-2xl border p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto my-8 shadow-2xl ${
+                isLight
+                  ? 'bg-[#fdfbf7] text-slate-900 border-amber-300 shadow-amber-950/20'
+                  : 'glass-panel-glow border-sky-400/40 shadow-sky-950 text-white'
+              }`}
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close Button */}
               <button
                 onClick={handleCloseCaseStudy}
-                className="absolute top-6 right-6 p-2 rounded-lg border border-slate-800 text-slate-400 hover:text-white hover:border-sky-400 transition-colors cursor-pointer"
+                className={`absolute top-6 right-6 p-2 rounded-lg border transition-colors cursor-pointer ${
+                  isLight
+                    ? 'border-amber-200 text-slate-500 hover:text-slate-900 hover:border-amber-400 bg-white'
+                    : 'border-slate-800 text-slate-400 hover:text-white hover:border-sky-400'
+                }`}
                 aria-label="Close Case Study"
               >
                 <X className="w-5 h-5" />
@@ -157,24 +254,40 @@ export const ProjectMissions: React.FC = () => {
 
               {/* Modal Header */}
               <div className="space-y-2 pr-10">
-                <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-sky-950/80 border border-sky-400/30 text-xs font-mono text-sky-300">
-                  <Radio className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
+                <div
+                  className={`inline-flex items-center gap-2 px-2.5 py-1 rounded text-xs font-mono border ${
+                    isLight
+                      ? 'bg-amber-100 text-amber-800 border-amber-300 font-bold'
+                      : 'bg-sky-950/80 border border-sky-400/30 text-sky-300'
+                  }`}
+                >
+                  <Radio className="w-3.5 h-3.5 text-emerald-500 animate-pulse" />
                   <span>CASE STUDY DOSSIER: {selectedMission.code}</span>
                 </div>
-                <h3 className="text-2xl sm:text-3xl font-heading font-bold text-white">
+                <h3 className={`text-2xl sm:text-3xl font-heading font-bold ${isLight ? 'text-slate-900' : 'text-white'}`}>
                   {selectedMission.name}
                 </h3>
-                <p className="text-sm font-mono text-sky-300">
+                <p className={`text-sm font-mono ${isLight ? 'text-amber-700 font-semibold' : 'text-sky-300'}`}>
                   {selectedMission.subtitle} &bull; {selectedMission.company} ({selectedMission.period})
                 </p>
               </div>
 
               {/* Telemetry Metrics Bar */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+              <div
+                className={`grid grid-cols-1 sm:grid-cols-3 gap-3 p-3.5 rounded-xl border ${
+                  isLight
+                    ? 'bg-amber-50/70 border-amber-200/90 text-slate-800'
+                    : 'bg-slate-900/80 border border-slate-800'
+                }`}
+              >
                 {selectedMission.telemetry.map((t, i) => (
                   <div key={i} className="font-mono">
-                    <span className="text-[10px] text-slate-400 uppercase block">{t.label}</span>
-                    <span className="text-sm font-bold text-sky-300">{t.value}</span>
+                    <span className={`text-[10px] uppercase block ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>
+                      {t.label}
+                    </span>
+                    <span className={`text-sm font-bold ${isLight ? 'text-amber-700' : 'text-sky-300'}`}>
+                      {t.value}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -183,92 +296,96 @@ export const ProjectMissions: React.FC = () => {
               <div className="space-y-6 text-sm">
                 {/* Challenge */}
                 <div className="space-y-2">
-                  <h4 className="text-xs font-mono uppercase tracking-wider text-rose-400 flex items-center gap-2">
-                    <Shield className="w-4 h-4 text-rose-400" />
+                  <h4 className="text-xs font-mono uppercase tracking-wider text-rose-600 flex items-center gap-2 font-bold">
+                    <Shield className="w-4 h-4 text-rose-600" />
                     THE CHALLENGE
                   </h4>
-                  <p className="text-slate-300 leading-relaxed font-sans bg-slate-900/50 p-4 rounded-xl border border-slate-800">
+                  <p
+                    className={`leading-relaxed font-sans p-4 rounded-xl border ${
+                      isLight
+                        ? 'bg-white border-amber-200/80 text-slate-700 shadow-xs'
+                        : 'text-slate-300 bg-slate-900/50 border-slate-800'
+                    }`}
+                  >
                     {selectedMission.caseStudy.challenge}
                   </p>
                 </div>
 
                 {/* Solution */}
                 <div className="space-y-2">
-                  <h4 className="text-xs font-mono uppercase tracking-wider text-sky-400 flex items-center gap-2">
-                    <Sparkles className="w-4 h-4 text-sky-400" />
+                  <h4 className={`text-xs font-mono uppercase tracking-wider flex items-center gap-2 font-bold ${isLight ? 'text-amber-700' : 'text-sky-400'}`}>
+                    <Sparkles className="w-4 h-4" />
                     TECHNICAL ARCHITECTURE & SOLUTION
                   </h4>
-                  <p className="text-slate-300 leading-relaxed font-sans bg-slate-900/50 p-4 rounded-xl border border-slate-800">
+                  <p
+                    className={`leading-relaxed font-sans p-4 rounded-xl border ${
+                      isLight
+                        ? 'bg-white border-amber-200/80 text-slate-700 shadow-xs'
+                        : 'text-slate-300 bg-slate-900/50 border-slate-800'
+                    }`}
+                  >
                     {selectedMission.caseStudy.solution}
                   </p>
                 </div>
 
                 {/* Architecture Model */}
                 <div className="space-y-2">
-                  <h4 className="text-xs font-mono uppercase tracking-wider text-indigo-400 flex items-center gap-2">
-                    <Cpu className="w-4 h-4 text-indigo-400" />
+                  <h4 className={`text-xs font-mono uppercase tracking-wider flex items-center gap-2 font-bold ${isLight ? 'text-indigo-700' : 'text-indigo-400'}`}>
+                    <Cpu className="w-4 h-4" />
                     SYSTEM ARCHITECTURE
                   </h4>
-                  <p className="text-slate-300 leading-relaxed font-sans bg-slate-900/50 p-4 rounded-xl border border-slate-800">
+                  <p
+                    className={`leading-relaxed font-sans p-4 rounded-xl border ${
+                      isLight
+                        ? 'bg-white border-amber-200/80 text-slate-700 shadow-xs'
+                        : 'text-slate-300 bg-slate-900/50 border-slate-800'
+                    }`}
+                  >
                     {selectedMission.caseStudy.architecture}
                   </p>
                 </div>
 
                 {/* Business & Performance Impact */}
                 <div className="space-y-2">
-                  <h4 className="text-xs font-mono uppercase tracking-wider text-emerald-400 flex items-center gap-2">
-                    <Activity className="w-4 h-4 text-emerald-400" />
+                  <h4 className="text-xs font-mono uppercase tracking-wider text-emerald-600 flex items-center gap-2 font-bold">
+                    <Activity className="w-4 h-4" />
                     VERIFIED MISSION IMPACT
                   </h4>
-                  <p className="text-slate-200 leading-relaxed font-sans bg-slate-900/50 p-4 rounded-xl border border-emerald-500/20 font-medium">
+                  <p
+                    className={`leading-relaxed font-sans p-4 rounded-xl border font-medium ${
+                      isLight
+                        ? 'bg-emerald-50/60 border-emerald-300 text-emerald-950'
+                        : 'text-slate-200 bg-slate-900/50 border-emerald-500/20'
+                    }`}
+                  >
                     {selectedMission.caseStudy.impact}
                   </p>
                 </div>
 
                 {/* Key Achievements Checklist */}
                 <div className="space-y-2 pt-2">
-                  <h4 className="text-xs font-mono uppercase tracking-wider text-sky-400 flex items-center gap-2">
+                  <h4 className={`text-xs font-mono uppercase tracking-wider flex items-center gap-2 font-bold ${isLight ? 'text-amber-700' : 'text-sky-400'}`}>
                     <CheckCircle2 className="w-4 h-4" />
                     ROLE & KEY DELIVERABLES
                   </h4>
                   <ul className="space-y-2">
                     {selectedMission.achievements.map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-2.5 text-slate-300 text-xs sm:text-sm">
-                        <span className="w-1.5 h-1.5 rounded-full bg-sky-400 mt-1.5 shrink-0" />
+                      <li
+                        key={idx}
+                        className={`flex items-start gap-2.5 text-xs sm:text-sm ${
+                          isLight ? 'text-slate-700' : 'text-slate-300'
+                        }`}
+                      >
+                        <span
+                          className={`w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 ${
+                            isLight ? 'bg-amber-600' : 'bg-sky-400'
+                          }`}
+                        />
                         <span>{item}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
-
-                {/* Tech Stack */}
-                <div className="space-y-2 pt-2">
-                  <div className="text-xs font-mono text-slate-400 uppercase">Deployed Technologies:</div>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedMission.technologies.map((t, idx) => {
-                      const TechIcon = REAL_TECH_ICON_MAP[t]
-                      return (
-                        <span
-                          key={idx}
-                          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-mono bg-sky-950/80 text-sky-300 border border-sky-500/30"
-                        >
-                          {TechIcon && <TechIcon className="w-4 h-4 shrink-0" />}
-                          <span>{t}</span>
-                        </span>
-                      )
-                    })}
-                  </div>
-                </div>
-              </div>
-
-              {/* Close Footer CTA */}
-              <div className="pt-4 border-t border-slate-800 flex justify-end">
-                <button
-                  onClick={handleCloseCaseStudy}
-                  className="px-5 py-2.5 rounded-lg text-xs font-mono font-medium bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors cursor-pointer"
-                >
-                  Close Dossier
-                </button>
               </div>
             </div>
           </div>

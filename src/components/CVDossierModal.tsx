@@ -1,6 +1,7 @@
 import React from 'react'
 import { PROFILE, WORK_EXPERIENCE, EDUCATION_DATA } from '../data/profile'
 import { sound } from '../lib/sound'
+import { useTheme } from '../context/ThemeContext'
 import { GithubIcon, LinkedinIcon } from './SocialIcons'
 import {
   X,
@@ -17,6 +18,7 @@ interface CVDossierModalProps {
 }
 
 export const CVDossierModal: React.FC<CVDossierModalProps> = ({ isOpen, onClose }) => {
+  const { isLight } = useTheme()
   if (!isOpen) return null
 
   const handlePrint = () => {
@@ -25,16 +27,32 @@ export const CVDossierModal: React.FC<CVDossierModalProps> = ({ isOpen, onClose 
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#020617]/90 backdrop-blur-xl animate-fade-in overflow-y-auto">
+    <div
+      className={`fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 animate-fade-in overflow-y-auto ${
+        isLight ? 'bg-black/40 backdrop-blur-sm' : 'bg-[#020617]/90 backdrop-blur-xl'
+      }`}
+    >
       <div
-        className="relative w-full max-w-4xl bg-slate-950 rounded-2xl border border-sky-400/40 p-6 sm:p-10 my-8 shadow-2xl max-h-[90vh] overflow-y-auto text-slate-100 space-y-8"
+        className={`relative w-full max-w-4xl rounded-2xl border p-6 sm:p-10 my-8 shadow-2xl max-h-[90vh] overflow-y-auto space-y-8 transition-colors ${
+          isLight
+            ? 'bg-[#fdfbf7] border-amber-300 text-slate-900'
+            : 'bg-slate-950 border-sky-400/40 text-slate-100'
+        }`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Control Bar */}
-        <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+        <div
+          className={`flex items-center justify-between border-b pb-4 ${
+            isLight ? 'border-amber-200' : 'border-slate-800'
+          }`}
+        >
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
-            <span className="font-mono text-xs uppercase text-sky-400 font-semibold tracking-wider">
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+            <span
+              className={`font-mono text-xs uppercase font-semibold tracking-wider ${
+                isLight ? 'text-amber-700' : 'text-sky-400'
+              }`}
+            >
               OFFICIAL CV DOSSIER // PHAN MINH DUC
             </span>
           </div>
@@ -42,7 +60,11 @@ export const CVDossierModal: React.FC<CVDossierModalProps> = ({ isOpen, onClose 
           <div className="flex items-center gap-2">
             <button
               onClick={handlePrint}
-              className="px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium bg-sky-400 text-slate-950 hover:bg-sky-300 transition-colors flex items-center gap-1.5 cursor-pointer"
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors flex items-center gap-1.5 cursor-pointer ${
+                isLight
+                  ? 'bg-amber-600 text-white hover:bg-amber-500 shadow-xs'
+                  : 'bg-sky-400 text-slate-950 hover:bg-sky-300'
+              }`}
             >
               <Printer className="w-3.5 h-3.5" />
               <span>Print / Save PDF</span>
@@ -52,7 +74,11 @@ export const CVDossierModal: React.FC<CVDossierModalProps> = ({ isOpen, onClose 
                 sound.playBlip(600)
                 onClose()
               }}
-              className="p-1.5 rounded-lg border border-slate-800 text-slate-400 hover:text-white hover:border-sky-400 transition-colors"
+              className={`p-1.5 rounded-lg border transition-colors ${
+                isLight
+                  ? 'border-amber-200 text-slate-600 hover:text-slate-900 hover:border-amber-400'
+                  : 'border-slate-800 text-slate-400 hover:text-white hover:border-sky-400'
+              }`}
             >
               <X className="w-5 h-5" />
             </button>
@@ -60,30 +86,50 @@ export const CVDossierModal: React.FC<CVDossierModalProps> = ({ isOpen, onClose 
         </div>
 
         {/* CV Header */}
-        <div className="text-center space-y-2 border-b border-slate-800 pb-6">
-          <h1 className="text-3xl sm:text-4xl font-heading font-extrabold text-white tracking-tight">
+        <div
+          className={`text-center space-y-2 border-b pb-6 ${
+            isLight ? 'border-amber-200' : 'border-slate-800'
+          }`}
+        >
+          <h1
+            className={`text-3xl sm:text-4xl font-heading font-extrabold tracking-tight ${
+              isLight ? 'text-slate-900' : 'text-white'
+            }`}
+          >
             {PROFILE.name}
           </h1>
-          <h2 className="text-base sm:text-lg font-mono text-sky-400 uppercase tracking-widest font-semibold">
+          <h2
+            className={`text-base sm:text-lg font-mono uppercase tracking-widest font-semibold ${
+              isLight ? 'text-amber-700' : 'text-sky-400'
+            }`}
+          >
             {PROFILE.title}
           </h2>
-          <div className="flex flex-wrap items-center justify-center gap-4 text-xs font-mono text-slate-300 pt-2">
+          <div
+            className={`flex flex-wrap items-center justify-center gap-4 text-xs font-mono pt-2 ${
+              isLight ? 'text-slate-600' : 'text-slate-300'
+            }`}
+          >
             <span className="flex items-center gap-1">
-              <Mail className="w-3.5 h-3.5 text-sky-400" />
+              <Mail className={`w-3.5 h-3.5 ${isLight ? 'text-amber-600' : 'text-sky-400'}`} />
               {PROFILE.email}
             </span>
             <span>&bull;</span>
             <span className="flex items-center gap-1">
-              <Phone className="w-3.5 h-3.5 text-sky-400" />
+              <Phone className={`w-3.5 h-3.5 ${isLight ? 'text-amber-600' : 'text-sky-400'}`} />
               {PROFILE.phone}
             </span>
             <span>&bull;</span>
             <span className="flex items-center gap-1">
-              <MapPin className="w-3.5 h-3.5 text-sky-400" />
+              <MapPin className={`w-3.5 h-3.5 ${isLight ? 'text-amber-600' : 'text-sky-400'}`} />
               {PROFILE.location}
             </span>
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-4 text-xs font-mono text-sky-400/90 pt-1">
+          <div
+            className={`flex flex-wrap items-center justify-center gap-4 text-xs font-mono pt-1 ${
+              isLight ? 'text-amber-700' : 'text-sky-400/90'
+            }`}
+          >
             <a
               href={PROFILE.linkedin}
               target="_blank"
@@ -108,42 +154,70 @@ export const CVDossierModal: React.FC<CVDossierModalProps> = ({ isOpen, onClose 
 
         {/* Summary */}
         <div className="space-y-2">
-          <h3 className="text-xs font-mono uppercase font-bold text-sky-400 tracking-wider">
+          <h3
+            className={`text-xs font-mono uppercase font-bold tracking-wider ${
+              isLight ? 'text-amber-700' : 'text-sky-400'
+            }`}
+          >
             SUMMARY
           </h3>
-          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
+          <p
+            className={`text-xs sm:text-sm leading-relaxed font-sans ${
+              isLight ? 'text-slate-700' : 'text-slate-300'
+            }`}
+          >
             {PROFILE.summary}
           </p>
         </div>
 
         {/* Technical Skills */}
         <div className="space-y-3">
-          <h3 className="text-xs font-mono uppercase font-bold text-sky-400 tracking-wider">
+          <h3
+            className={`text-xs font-mono uppercase font-bold tracking-wider ${
+              isLight ? 'text-amber-700' : 'text-sky-400'
+            }`}
+          >
             TECHNICAL SKILLS
           </h3>
-          <div className="space-y-2 text-xs font-sans text-slate-300">
+          <div
+            className={`space-y-2 text-xs font-sans ${
+              isLight ? 'text-slate-700' : 'text-slate-300'
+            }`}
+          >
             <div>
-              <strong className="text-white font-mono">Languages: </strong>
+              <strong className={`font-mono ${isLight ? 'text-slate-900' : 'text-white'}`}>
+                Languages:{' '}
+              </strong>
               TypeScript, JavaScript (ES6+), English (Intermediate – working proficiency in cross-border teams)
             </div>
             <div>
-              <strong className="text-white font-mono">Frameworks/Libraries: </strong>
+              <strong className={`font-mono ${isLight ? 'text-slate-900' : 'text-white'}`}>
+                Frameworks/Libraries:{' '}
+              </strong>
               React.js, Next.js, Electron.js
             </div>
             <div>
-              <strong className="text-white font-mono">State Management & Data: </strong>
+              <strong className={`font-mono ${isLight ? 'text-slate-900' : 'text-white'}`}>
+                State Management & Data:{' '}
+              </strong>
               Redux (Redux Toolkit), Zustand, RESTful APIs, WebSocket
             </div>
             <div>
-              <strong className="text-white font-mono">UI & Styling: </strong>
+              <strong className={`font-mono ${isLight ? 'text-slate-900' : 'text-white'}`}>
+                UI & Styling:{' '}
+              </strong>
               Tailwind CSS, Shadcn/ui, React Bits, Material UI (MUI), Responsive & Accessible Design
             </div>
             <div>
-              <strong className="text-white font-mono">Architecture & Optimization: </strong>
+              <strong className={`font-mono ${isLight ? 'text-slate-900' : 'text-white'}`}>
+                Architecture & Optimization:{' '}
+              </strong>
               Micro-Frontend (Module Federation), High-Frequency Rendering Optimization, Code Splitting, BroadcastChannel
             </div>
             <div>
-              <strong className="text-white font-mono">Tools, CI/CD & Testing: </strong>
+              <strong className={`font-mono ${isLight ? 'text-slate-900' : 'text-white'}`}>
+                Tools, CI/CD & Testing:{' '}
+              </strong>
               Git, Docker, Jenkins (CI/CD), Postman, JMeter, Jira, Bitbucket
             </div>
           </div>
@@ -151,35 +225,71 @@ export const CVDossierModal: React.FC<CVDossierModalProps> = ({ isOpen, onClose 
 
         {/* Work Experience */}
         <div className="space-y-6">
-          <h3 className="text-xs font-mono uppercase font-bold text-sky-400 tracking-wider">
+          <h3
+            className={`text-xs font-mono uppercase font-bold tracking-wider ${
+              isLight ? 'text-amber-700' : 'text-sky-400'
+            }`}
+          >
             WORK EXPERIENCE
           </h3>
 
           <div className="space-y-6">
             {WORK_EXPERIENCE.map((exp) => (
-              <div key={exp.id} className="space-y-3 border-l-2 border-slate-800 pl-4">
+              <div
+                key={exp.id}
+                className={`space-y-3 border-l-2 pl-4 ${
+                  isLight ? 'border-amber-300' : 'border-slate-800'
+                }`}
+              >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                   <div>
-                    <span className="font-heading font-bold text-white text-base">
+                    <span
+                      className={`font-heading font-bold text-base ${
+                        isLight ? 'text-slate-900' : 'text-white'
+                      }`}
+                    >
                       {exp.company}
                     </span>
-                    <span className="text-slate-400 mx-2">|</span>
-                    <span className="text-sky-300 font-mono text-xs font-semibold">
+                    <span className={isLight ? 'text-amber-300 mx-2' : 'text-slate-400 mx-2'}>
+                      |
+                    </span>
+                    <span
+                      className={`font-mono text-xs font-semibold ${
+                        isLight ? 'text-amber-700' : 'text-sky-300'
+                      }`}
+                    >
                       {exp.role}
                     </span>
                   </div>
-                  <span className="text-xs font-mono text-slate-400">{exp.period}</span>
+                  <span className={`text-xs font-mono ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>
+                    {exp.period}
+                  </span>
                 </div>
 
                 {exp.projects.map((proj, pIdx) => (
                   <div key={pIdx} className="space-y-2 pt-1">
-                    <div className="text-xs font-mono font-semibold text-slate-200">
+                    <div
+                      className={`text-xs font-mono font-semibold ${
+                        isLight ? 'text-slate-800' : 'text-slate-200'
+                      }`}
+                    >
                       Project: {proj.name}
                     </div>
                     <ul className="space-y-1.5 pl-2">
                       {proj.bullets.map((b, bIdx) => (
-                        <li key={bIdx} className="text-xs text-slate-300 flex items-start gap-2">
-                          <span className="text-sky-400 mt-1">•</span>
+                        <li
+                          key={bIdx}
+                          className={`text-xs flex items-start gap-2 ${
+                            isLight ? 'text-slate-700' : 'text-slate-300'
+                          }`}
+                        >
+                          <span
+                            className={`mt-1 ${
+                              isLight ? 'text-amber-600' : 'text-sky-400'
+                            }`}
+                          >
+                            •
+                          </span>
                           <span>{b}</span>
                         </li>
                       ))}
@@ -193,24 +303,49 @@ export const CVDossierModal: React.FC<CVDossierModalProps> = ({ isOpen, onClose 
 
         {/* Education */}
         <div className="space-y-3">
-          <h3 className="text-xs font-mono uppercase font-bold text-sky-400 tracking-wider">
+          <h3
+            className={`text-xs font-mono uppercase font-bold tracking-wider ${
+              isLight ? 'text-amber-700' : 'text-sky-400'
+            }`}
+          >
             EDUCATION
           </h3>
-          <div className="border-l-2 border-slate-800 pl-4 space-y-1 text-xs">
-            <div className="font-heading font-bold text-white text-sm">
-              {EDUCATION_DATA.institution} | <span className="font-mono text-slate-400">{EDUCATION_DATA.period}</span>
+          <div
+            className={`border-l-2 pl-4 space-y-1 text-xs ${
+              isLight ? 'border-amber-300' : 'border-slate-800'
+            }`}
+          >
+            <div
+              className={`font-heading font-bold text-sm ${
+                isLight ? 'text-slate-900' : 'text-white'
+              }`}
+            >
+              {EDUCATION_DATA.institution} |{' '}
+              <span className={`font-mono ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>
+                {EDUCATION_DATA.period}
+              </span>
             </div>
-            <div className="text-slate-300">Degree: {EDUCATION_DATA.degree}</div>
-            <div className="text-emerald-400 font-mono">Graduation Grade: {EDUCATION_DATA.grade}</div>
+            <div className={isLight ? 'text-slate-700' : 'text-slate-300'}>
+              Degree: {EDUCATION_DATA.degree}
+            </div>
+            <div className="text-emerald-600 font-mono font-medium">
+              Graduation Grade: {EDUCATION_DATA.grade}
+            </div>
           </div>
         </div>
 
         {/* Footer print action */}
-        <div className="pt-4 border-t border-slate-800 flex justify-between items-center text-xs font-mono text-slate-400">
+        <div
+          className={`pt-4 border-t flex justify-between items-center text-xs font-mono ${
+            isLight ? 'border-amber-200 text-slate-500' : 'border-slate-800 text-slate-400'
+          }`}
+        >
           <span>Single Source of Truth &bull; Phan Minh Duc</span>
           <button
             onClick={handlePrint}
-            className="text-sky-400 hover:text-sky-300 flex items-center gap-1 underline"
+            className={`flex items-center gap-1 underline cursor-pointer ${
+              isLight ? 'text-amber-700 hover:text-amber-800' : 'text-sky-400 hover:text-sky-300'
+            }`}
           >
             <Download className="w-3.5 h-3.5" />
             Save as PDF / Print

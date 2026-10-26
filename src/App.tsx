@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { ThemeProvider, useTheme } from './context/ThemeContext'
 import { StarfieldCanvas } from './components/StarfieldCanvas'
 import { Navbar } from './components/Navbar'
 import { HeroSection } from './components/HeroSection'
@@ -13,12 +14,19 @@ import { AIMissionControlModal } from './components/AIMissionControlModal'
 import { CVDossierModal } from './components/CVDossierModal'
 import './App.css'
 
-function App() {
+function PortfolioContent() {
   const [isAIModalOpen, setIsAIModalOpen] = useState(false)
   const [isCvModalOpen, setIsCvModalOpen] = useState(false)
+  const { isLight } = useTheme()
 
   return (
-    <div className="relative min-h-screen bg-[#020617] text-slate-100 overflow-x-hidden selection:bg-sky-500/30 selection:text-sky-200">
+    <div
+      className={`relative min-h-screen overflow-x-hidden transition-colors duration-500 ${
+        isLight
+          ? 'bg-[#fdfbf7] text-slate-900 selection:bg-amber-500/30 selection:text-amber-900'
+          : 'bg-[#020617] text-slate-100 selection:bg-sky-500/30 selection:text-sky-200'
+      }`}
+    >
       {/* Dynamic Starfield Atmosphere */}
       <StarfieldCanvas />
 
@@ -67,6 +75,14 @@ function App() {
         onClose={() => setIsCvModalOpen(false)}
       />
     </div>
+  )
+}
+
+function App() {
+  return (
+    <ThemeProvider>
+      <PortfolioContent />
+    </ThemeProvider>
   )
 }
 

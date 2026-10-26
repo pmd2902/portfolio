@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { SKILLS_DATA } from '../data/profile'
 import type { SkillItem } from '../data/profile'
 import { sound } from '../lib/sound'
+import { useTheme } from '../context/ThemeContext'
 import { REAL_TECH_ICON_MAP } from './TechIcons'
 import {
   Cpu,
@@ -11,6 +12,7 @@ import {
 } from 'lucide-react'
 
 export const TechConstellation: React.FC = () => {
+  const { isLight } = useTheme()
   const [selectedCategory, setSelectedCategory] = useState<string>('All')
   const [activeSkill, setActiveSkill] = useState<SkillItem | null>(null)
 
@@ -35,24 +37,48 @@ export const TechConstellation: React.FC = () => {
   }
 
   return (
-    <section id="constellation" className="py-24 relative px-4 sm:px-6 lg:px-8 border-t border-sky-500/10">
+    <section
+      id="constellation"
+      className={`py-24 relative px-4 sm:px-6 lg:px-8 border-t ${
+        isLight ? 'border-amber-200/80' : 'border-sky-500/10'
+      }`}
+    >
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-sky-500/15 pb-6">
+        <div
+          className={`flex flex-col md:flex-row md:items-end justify-between gap-4 border-b pb-6 ${
+            isLight ? 'border-amber-200' : 'border-sky-500/15'
+          }`}
+        >
           <div>
-            <div className="inline-flex items-center gap-2 text-xs font-mono text-sky-400 uppercase tracking-widest mb-1">
+            <div
+              className={`inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest mb-1 ${
+                isLight ? 'text-amber-700 font-bold' : 'text-sky-400'
+              }`}
+            >
               <Cpu className="w-3.5 h-3.5" />
               <span>Section // 02</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-heading font-bold text-white tracking-tight">
+            <h2
+              className={`text-3xl sm:text-5xl font-heading font-bold tracking-tight ${
+                isLight ? 'text-slate-900' : 'text-white'
+              }`}
+            >
               TECHNOLOGY CONSTELLATION
             </h2>
-            <p className="text-sm sm:text-base text-slate-400 font-mono mt-1">
+            <p
+              className={`text-sm sm:text-base font-mono mt-1 ${
+                isLight ? 'text-slate-600' : 'text-slate-400'
+              }`}
+            >
               Interactive Flight Capability Matrix & Official Technology Constellations
             </p>
           </div>
-          <div className="font-mono text-xs text-slate-400">
-            TOTAL CONSTELLATIONS: <span className="text-sky-300 font-semibold">{SKILLS_DATA.length} SYSTEMS</span>
+          <div className={`font-mono text-xs ${isLight ? 'text-slate-600' : 'text-slate-400'}`}>
+            TOTAL CONSTELLATIONS:{' '}
+            <span className={`font-semibold ${isLight ? 'text-amber-700 font-bold' : 'text-sky-300'}`}>
+              {SKILLS_DATA.length} SYSTEMS
+            </span>
           </div>
         </div>
 
@@ -69,7 +95,11 @@ export const TechConstellation: React.FC = () => {
                 }}
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-mono transition-all cursor-pointer ${
                   isSelected
-                    ? 'bg-sky-400 text-slate-950 font-bold shadow-[0_0_15px_rgba(56,189,248,0.35)]'
+                    ? isLight
+                      ? 'bg-amber-600 text-white font-bold shadow-md shadow-amber-600/30'
+                      : 'bg-sky-400 text-slate-950 font-bold shadow-[0_0_15px_rgba(56,189,248,0.35)]'
+                    : isLight
+                    ? 'bg-white text-slate-700 border border-amber-200/90 hover:border-amber-400 hover:text-amber-900 hover:bg-amber-50 shadow-xs'
                     : 'bg-slate-900/70 text-slate-300 border border-slate-800 hover:border-sky-500/30 hover:text-white'
                 }`}
               >
@@ -91,40 +121,82 @@ export const TechConstellation: React.FC = () => {
                 onClick={() => handleSkillClick(skill)}
                 className={`relative group p-4 rounded-xl border transition-all duration-300 cursor-pointer ${
                   isSelected
-                    ? 'bg-sky-950/70 border-sky-400 shadow-[0_0_20px_rgba(56,189,248,0.3)]'
+                    ? isLight
+                      ? 'bg-amber-50/80 border-amber-500 shadow-md shadow-amber-500/20'
+                      : 'bg-sky-950/70 border-sky-400 shadow-[0_0_20px_rgba(56,189,248,0.3)]'
+                    : isLight
+                    ? 'bg-white hover:bg-amber-50/30 border-amber-200/90 hover:border-amber-400 shadow-xs hover:shadow-md hover:-translate-y-1'
                     : 'bg-slate-900/60 hover:bg-slate-900/90 border-slate-800 hover:border-sky-500/40 hover:-translate-y-1'
                 }`}
               >
                 {/* Glowing Star Point in top right */}
                 {skill.highlight && (
                   <div className="absolute top-3 right-3 flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-ping opacity-75" />
-                    <span className="w-1.5 h-1.5 rounded-full bg-sky-400" />
+                    <span
+                      className={`w-1.5 h-1.5 rounded-full animate-ping opacity-75 ${
+                        isLight ? 'bg-amber-500' : 'bg-sky-400'
+                      }`}
+                    />
+                    <span
+                      className={`w-1.5 h-1.5 rounded-full ${
+                        isLight ? 'bg-amber-500' : 'bg-sky-400'
+                      }`}
+                    />
                   </div>
                 )}
 
                 <div className="flex items-center gap-3">
-                  <div className="w-11 h-11 rounded-xl bg-slate-950/90 border border-slate-800/90 flex items-center justify-center p-2 group-hover:border-sky-400/50 group-hover:shadow-[0_0_18px_rgba(56,189,248,0.25)] transition-all shrink-0">
+                  <div
+                    className={`w-11 h-11 rounded-xl border flex items-center justify-center p-2 transition-all shrink-0 ${
+                      isLight
+                        ? 'bg-amber-50 border-amber-200/90 group-hover:border-amber-400 group-hover:shadow-[0_0_12px_rgba(245,158,11,0.25)]'
+                        : 'bg-slate-950/90 border-slate-800/90 group-hover:border-sky-400/50 group-hover:shadow-[0_0_18px_rgba(56,189,248,0.25)]'
+                    }`}
+                  >
                     <IconComponent className="w-7 h-7" />
                   </div>
                   <div className="min-w-0">
-                    <h3 className="text-sm font-heading font-semibold text-white group-hover:text-sky-300 transition-colors truncate">
+                    <h3
+                      className={`text-sm font-heading font-semibold transition-colors truncate ${
+                        isLight
+                          ? 'text-slate-900 group-hover:text-amber-700'
+                          : 'text-white group-hover:text-sky-300'
+                      }`}
+                    >
                       {skill.name}
                     </h3>
-                    <span className="text-[10px] font-mono text-slate-400 uppercase block">
+                    <span
+                      className={`text-[10px] font-mono uppercase block ${
+                        isLight ? 'text-slate-500' : 'text-slate-400'
+                      }`}
+                    >
                       {skill.category}
                     </span>
                   </div>
                 </div>
 
-                <p className="text-xs text-slate-400 mt-3 font-sans line-clamp-2 leading-relaxed">
+                <p
+                  className={`text-xs mt-3 font-sans line-clamp-2 leading-relaxed ${
+                    isLight ? 'text-slate-600' : 'text-slate-400'
+                  }`}
+                >
                   {skill.description}
                 </p>
 
-                <div className="mt-3 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-mono text-sky-400/90">
+                <div
+                  className={`mt-3 pt-2 border-t flex items-center justify-between text-[11px] font-mono ${
+                    isLight ? 'border-amber-100 text-amber-700' : 'border-slate-800/80 text-sky-400/90'
+                  }`}
+                >
                   <span>{skill.proficiency}</span>
-                  <span className="text-slate-500 group-hover:text-sky-400 transition-colors text-[10px]">
-                    INSPECT →
+                  <span
+                    className={`transition-colors text-[10px] ${
+                      isLight
+                        ? 'text-slate-500 group-hover:text-amber-700'
+                        : 'text-slate-500 group-hover:text-sky-400'
+                    }`}
+                  >
+                    INSPECT &rarr;
                   </span>
                 </div>
               </div>
@@ -134,47 +206,99 @@ export const TechConstellation: React.FC = () => {
 
         {/* Selected Skill Detail Inspector Drawer */}
         {activeSkill && (
-          <div className="glass-panel-glow p-6 rounded-2xl border border-sky-400/40 space-y-4 animate-fade-in relative">
+          <div
+            className={`p-6 rounded-2xl border space-y-4 animate-fade-in relative ${
+              isLight
+                ? 'bg-white border-amber-300 shadow-xl shadow-amber-950/10'
+                : 'glass-panel-glow border-sky-400/40'
+            }`}
+          >
             <button
               onClick={() => setActiveSkill(null)}
-              className="absolute top-5 right-5 p-1.5 rounded-lg border border-slate-800 text-slate-400 hover:text-white hover:border-sky-500/40 transition-colors cursor-pointer"
+              className={`absolute top-5 right-5 p-1.5 rounded-lg border transition-colors cursor-pointer ${
+                isLight
+                  ? 'border-amber-200 text-slate-500 hover:text-slate-900 hover:border-amber-400'
+                  : 'border-slate-800 text-slate-400 hover:text-white hover:border-sky-500/40'
+              }`}
             >
               <X className="w-4 h-4" />
             </button>
 
             <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-slate-950 border border-sky-400/40 flex items-center justify-center p-3 shadow-lg shadow-sky-950/50">
+              <div
+                className={`w-14 h-14 rounded-2xl border flex items-center justify-center p-3 shadow-lg ${
+                  isLight
+                    ? 'bg-amber-50 border-amber-300 text-amber-700 shadow-amber-950/10'
+                    : 'bg-slate-950 border-sky-400/40 shadow-sky-950/50'
+                }`}
+              >
                 {React.createElement(REAL_TECH_ICON_MAP[activeSkill.name] || Code, {
                   className: 'w-8 h-8',
                 })}
               </div>
               <div>
-                <div className="text-xs font-mono text-sky-400 uppercase flex items-center gap-2">
+                <div
+                  className={`text-xs font-mono uppercase flex items-center gap-2 ${
+                    isLight ? 'text-amber-700 font-bold' : 'text-sky-400'
+                  }`}
+                >
                   <Info className="w-3.5 h-3.5" />
                   <span>CONSTELLATION NODE TELEMETRY</span>
                 </div>
-                <h3 className="text-xl sm:text-2xl font-heading font-bold text-white">
+                <h3
+                  className={`text-xl sm:text-2xl font-heading font-bold ${
+                    isLight ? 'text-slate-900' : 'text-white'
+                  }`}
+                >
                   {activeSkill.name}
                 </h3>
               </div>
             </div>
 
-            <p className="text-sm text-slate-200 leading-relaxed font-sans max-w-3xl">
+            <p
+              className={`text-sm leading-relaxed font-sans max-w-3xl ${
+                isLight ? 'text-slate-700' : 'text-slate-200'
+              }`}
+            >
               {activeSkill.description}
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 font-mono text-xs">
-              <div className="p-3 rounded-lg bg-slate-900/80 border border-slate-800">
-                <span className="text-slate-400 block text-[10px] uppercase">Domain Category</span>
-                <span className="text-sky-300 font-semibold">{activeSkill.category}</span>
+              <div
+                className={`p-3 rounded-lg border ${
+                  isLight ? 'bg-amber-50/70 border-amber-200/80 text-slate-800' : 'bg-slate-900/80 border-slate-800'
+                }`}
+              >
+                <span className={`block text-[10px] uppercase ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>
+                  Domain Category
+                </span>
+                <span className={`font-semibold ${isLight ? 'text-amber-700' : 'text-sky-300'}`}>
+                  {activeSkill.category}
+                </span>
               </div>
-              <div className="p-3 rounded-lg bg-slate-900/80 border border-slate-800">
-                <span className="text-slate-400 block text-[10px] uppercase">Application Depth</span>
-                <span className="text-emerald-400 font-semibold">{activeSkill.proficiency}</span>
+              <div
+                className={`p-3 rounded-lg border ${
+                  isLight ? 'bg-amber-50/70 border-amber-200/80 text-slate-800' : 'bg-slate-900/80 border-slate-800'
+                }`}
+              >
+                <span className={`block text-[10px] uppercase ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>
+                  Application Depth
+                </span>
+                <span className={`font-semibold ${isLight ? 'text-emerald-600' : 'text-emerald-400'}`}>
+                  {activeSkill.proficiency}
+                </span>
               </div>
-              <div className="p-3 rounded-lg bg-slate-900/80 border border-slate-800">
-                <span className="text-slate-400 block text-[10px] uppercase">Production Verification</span>
-                <span className="text-slate-200 font-semibold">Active in CV Missions</span>
+              <div
+                className={`p-3 rounded-lg border ${
+                  isLight ? 'bg-amber-50/70 border-amber-200/80 text-slate-800' : 'bg-slate-900/80 border-slate-800'
+                }`}
+              >
+                <span className={`block text-[10px] uppercase ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>
+                  Production Verification
+                </span>
+                <span className={`font-semibold ${isLight ? 'text-slate-900' : 'text-slate-200'}`}>
+                  Active in CV Missions
+                </span>
               </div>
             </div>
           </div>

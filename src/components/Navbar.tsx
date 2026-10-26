@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { sound } from '../lib/sound'
+import { useTheme } from '../context/ThemeContext'
 import {
   Compass,
   Layers,
@@ -13,6 +14,8 @@ import {
   X,
   Download,
   Terminal,
+  Sun,
+  Moon,
 } from 'lucide-react'
 
 interface NavbarProps {
@@ -21,6 +24,7 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ onOpenAIModal, onOpenCvModal }) => {
+  const { isLight, toggleTheme } = useTheme()
   const [scrolled, setScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [soundEnabled, setSoundEnabled] = useState(false)
@@ -77,11 +81,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAIModal, onOpenCvModal }) 
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        scrolled
-          ? 'bg-[#020617]/85 backdrop-blur-md border-b border-sky-500/15 py-3 shadow-lg shadow-black/40'
-          : 'bg-transparent py-5'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${scrolled
+        ? isLight
+          ? 'bg-[#fdfbf7]/90 backdrop-blur-md border-b border-amber-500/20 py-3 shadow-md shadow-amber-950/5'
+          : 'bg-[#020617]/85 backdrop-blur-md border-b border-sky-500/15 py-3 shadow-lg shadow-black/40'
+        : 'bg-transparent py-5'
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Brand / Callsign */}
@@ -90,21 +95,39 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAIModal, onOpenCvModal }) 
           onClick={() => sound.playBlip(900)}
           className="group flex items-center gap-3 text-left focus:outline-none"
         >
-          <div className="relative w-9 h-9 rounded-lg bg-sky-950/60 border border-sky-400/30 flex items-center justify-center transition-all duration-300 group-hover:border-sky-400 group-hover:shadow-[0_0_12px_rgba(56,189,248,0.4)]">
-            <span className="text-sky-400 font-mono font-bold text-xs">PMD</span>
+          <div
+            className={`relative w-9 h-9 rounded-lg border flex items-center justify-center transition-all duration-300 ${isLight
+              ? 'bg-amber-100/90 border-amber-400/50 text-amber-700 group-hover:border-amber-500 group-hover:shadow-[0_0_12px_rgba(245,158,11,0.3)]'
+              : 'bg-sky-950/60 border-sky-400/30 text-sky-400 group-hover:border-sky-400 group-hover:shadow-[0_0_12px_rgba(56,189,248,0.4)]'
+              }`}
+          >
+            <span className="font-mono font-bold text-xs">PMD</span>
             <div className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-emerald-400 animate-ping opacity-75" />
             <div className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-emerald-400" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-heading font-semibold text-slate-100 tracking-tight text-sm sm:text-base group-hover:text-sky-300 transition-colors">
+              <span
+                className={`font-heading font-semibold tracking-tight text-sm sm:text-base transition-colors ${isLight
+                  ? 'text-slate-900 group-hover:text-amber-700'
+                  : 'text-slate-100 group-hover:text-sky-300'
+                  }`}
+              >
                 PHAN MINH DUC
               </span>
-              <span className="hidden xl:inline-block font-mono text-[10px] px-1.5 py-0.5 rounded bg-sky-500/10 text-sky-400 border border-sky-500/20">
+              <span
+                className={`hidden xl:inline-block font-mono text-[10px] px-1.5 py-0.5 rounded border ${isLight
+                  ? 'bg-amber-100 text-amber-700 border-amber-300'
+                  : 'bg-sky-500/10 text-sky-400 border-sky-500/20'
+                  }`}
+              >
                 ORBIT NOMINAL
               </span>
             </div>
-            <p className="text-[11px] font-mono text-slate-400 hidden sm:block">
+            <p
+              className={`text-[11px] font-mono hidden sm:block ${isLight ? 'text-slate-500' : 'text-slate-400'
+                }`}
+            >
               MIDDLE FRONT-END DEV &bull; {currentTime}
             </p>
           </div>
@@ -116,9 +139,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAIModal, onOpenCvModal }) 
             <button
               key={link.code}
               onClick={() => handleNavClick(link.href)}
-              className="px-3 py-1.5 rounded-md text-xs font-mono text-slate-300 hover:text-white hover:bg-sky-500/10 border border-transparent hover:border-sky-500/20 transition-all flex items-center gap-1.5 cursor-pointer"
+              className={`px-3 py-1.5 rounded-md text-xs font-mono transition-all flex items-center gap-1.5 cursor-pointer border ${isLight
+                ? 'text-slate-700 hover:text-slate-900 hover:bg-amber-500/10 border-transparent hover:border-amber-500/20'
+                : 'text-slate-300 hover:text-white hover:bg-sky-500/10 border-transparent hover:border-sky-500/20'
+                }`}
             >
-              <span className="text-sky-400 text-[10px]">{link.code}.</span>
+              <span className={`text-[10px] ${isLight ? 'text-amber-600' : 'text-sky-400'}`}>
+                {link.code}.
+              </span>
               <span>{link.label}</span>
             </button>
           ))}
@@ -126,17 +154,20 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAIModal, onOpenCvModal }) 
 
         {/* Action Controls */}
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* Audio Synthesizer toggle */}
+          {/* Theme Toggle Button (Solar Flare Light / Deep Cosmos Dark) */}
           <button
-            onClick={toggleSound}
-            aria-label={soundEnabled ? 'Mute sound telemetry' : 'Enable sound telemetry'}
-            title={soundEnabled ? 'Mute audio' : 'Enable audio feedback'}
-            className="p-2 rounded-md border border-slate-800 bg-slate-900/60 text-slate-400 hover:text-sky-300 hover:border-sky-500/30 transition-all text-xs flex items-center gap-1"
+            onClick={toggleTheme}
+            aria-label={isLight ? 'Switch to Deep Space Night' : 'Switch to Solar Flare Daylight'}
+            title={isLight ? 'Chuyển sang Chế độ Tối (Deep Cosmos)' : 'Chuyển sang Chế độ Sáng (Solar Flare)'}
+            className={`p-2 rounded-md border transition-all text-xs flex items-center justify-center cursor-pointer ${isLight
+              ? 'border-amber-400/60 bg-amber-100 text-amber-700 hover:bg-amber-200/80 shadow-xs'
+              : 'border-slate-800 bg-slate-900/60 text-slate-400 hover:text-amber-400 hover:border-amber-400/30'
+              }`}
           >
-            {soundEnabled ? (
-              <Volume2 className="w-4 h-4 text-sky-400 animate-pulse" />
+            {isLight ? (
+              <Moon className="w-4 h-4 text-amber-700 transition-transform duration-300 hover:-rotate-12" />
             ) : (
-              <VolumeX className="w-4 h-4" />
+              <Sun className="w-4 h-4 text-amber-400 transition-transform duration-300 hover:rotate-45" />
             )}
           </button>
 
@@ -146,9 +177,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAIModal, onOpenCvModal }) 
               sound.playTransmission()
               onOpenAIModal()
             }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-mono text-sky-300 bg-sky-950/40 border border-sky-500/30 hover:border-sky-400 hover:bg-sky-900/40 hover:shadow-[0_0_15px_rgba(56,189,248,0.25)] transition-all cursor-pointer"
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-mono transition-all cursor-pointer border ${isLight
+              ? 'text-amber-900 bg-amber-500/15 border-amber-400/60 hover:bg-amber-500/25 hover:border-amber-500 shadow-xs'
+              : 'text-sky-300 bg-sky-950/40 border-sky-500/30 hover:border-sky-400 hover:bg-sky-900/40 hover:shadow-[0_0_15px_rgba(56,189,248,0.25)]'
+              }`}
           >
-            <Bot className="w-3.5 h-3.5 text-sky-400 animate-pulse" />
+            <Bot className={`w-3.5 h-3.5 animate-pulse ${isLight ? 'text-amber-600' : 'text-sky-400'}`} />
             <span className="hidden sm:inline">AI CONTROL</span>
             <span className="sm:hidden">AI</span>
           </button>
@@ -159,7 +193,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAIModal, onOpenCvModal }) 
               sound.playSuccess()
               onOpenCvModal()
             }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-mono font-medium text-slate-950 bg-sky-400 hover:bg-sky-300 hover:shadow-[0_0_16px_rgba(56,189,248,0.4)] transition-all cursor-pointer"
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-mono font-medium transition-all cursor-pointer ${isLight
+              ? 'text-white bg-amber-600 hover:bg-amber-700 shadow-sm shadow-amber-600/30'
+              : 'text-slate-950 bg-sky-400 hover:bg-sky-300 hover:shadow-[0_0_16px_rgba(56,189,248,0.4)]'
+              }`}
           >
             <Download className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">CV DOSSIER</span>
@@ -173,7 +210,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAIModal, onOpenCvModal }) 
               setMobileMenuOpen(!mobileMenuOpen)
             }}
             aria-label="Toggle navigation menu"
-            className="lg:hidden p-2 rounded-md border border-slate-800 bg-slate-900/80 text-slate-300 hover:text-sky-400 focus:outline-none"
+            className={`lg:hidden p-2 rounded-md border focus:outline-none cursor-pointer ${isLight
+              ? 'border-amber-300 bg-amber-50 text-slate-800 hover:text-amber-700'
+              : 'border-slate-800 bg-slate-900/80 text-slate-300 hover:text-sky-400'
+              }`}
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -182,9 +222,17 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAIModal, onOpenCvModal }) 
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden px-4 pt-3 pb-6 mt-2 bg-[#030712]/95 backdrop-blur-xl border-b border-sky-500/20 shadow-2xl">
+        <div
+          className={`lg:hidden px-4 pt-3 pb-6 mt-2 backdrop-blur-xl border-b shadow-2xl ${isLight
+            ? 'bg-[#fdfbf7]/98 border-amber-500/25 text-slate-800'
+            : 'bg-[#030712]/95 border-sky-500/20'
+            }`}
+        >
           <div className="flex flex-col gap-2 pt-2">
-            <div className="text-[11px] font-mono text-sky-400/80 uppercase px-3 py-1 flex items-center gap-2">
+            <div
+              className={`text-[11px] font-mono uppercase px-3 py-1 flex items-center gap-2 ${isLight ? 'text-amber-700' : 'text-sky-400/80'
+                }`}
+            >
               <Terminal className="w-3.5 h-3.5" />
               Navigation Subsystems
             </div>
@@ -194,19 +242,50 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAIModal, onOpenCvModal }) 
                 <button
                   key={link.code}
                   onClick={() => handleNavClick(link.href)}
-                  className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-left text-sm font-mono text-slate-200 hover:bg-sky-500/10 hover:text-sky-300 border border-transparent hover:border-sky-500/20 transition-all"
+                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-left text-sm font-mono transition-all border ${isLight
+                    ? 'text-slate-800 hover:bg-amber-500/10 hover:text-amber-800 border-transparent hover:border-amber-500/20'
+                    : 'text-slate-200 hover:bg-sky-500/10 hover:text-sky-300 border-transparent hover:border-sky-500/20'
+                    }`}
                 >
                   <div className="flex items-center gap-3">
-                    <Icon className="w-4 h-4 text-sky-400" />
+                    <Icon className={`w-4 h-4 ${isLight ? 'text-amber-600' : 'text-sky-400'}`} />
                     <span>{link.label}</span>
                   </div>
-                  <span className="text-xs text-sky-500/60 font-mono">[{link.code}]</span>
+                  <span
+                    className={`text-xs font-mono ${isLight ? 'text-amber-600/70' : 'text-sky-500/60'
+                      }`}
+                  >
+                    [{link.code}]
+                  </span>
                 </button>
               )
             })}
-            <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs font-mono text-slate-400 px-3">
+            <div
+              className={`pt-3 border-t flex items-center justify-between text-xs font-mono px-3 ${isLight ? 'border-amber-200 text-slate-600' : 'border-slate-800/80 text-slate-400'
+                }`}
+            >
+              <span>ORBIT THEME:</span>
+              <button
+                onClick={toggleTheme}
+                className={`flex items-center gap-1.5 px-2.5 py-1 rounded border cursor-pointer text-xs ${isLight
+                  ? 'bg-amber-100 border-amber-300 text-amber-800 font-semibold'
+                  : 'bg-slate-900 border-slate-700 text-slate-200'
+                  }`}
+              >
+                {isLight ? (
+                  <Moon className="w-3.5 h-3.5 text-amber-700" />
+                ) : (
+                  <Sun className="w-3.5 h-3.5 text-amber-400" />
+                )}
+                <span>{isLight ? 'Solar Flare (Sáng)' : 'Deep Cosmos (Tối)'}</span>
+              </button>
+            </div>
+            <div
+              className={`flex items-center justify-between text-xs font-mono px-3 ${isLight ? 'text-slate-500' : 'text-slate-400'
+                }`}
+            >
               <span>LOCAL ORBIT: {currentTime}</span>
-              <span className="text-emerald-400">ONLINE</span>
+              <span className="text-emerald-500 font-bold">ONLINE</span>
             </div>
           </div>
         </div>
