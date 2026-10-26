@@ -64,7 +64,7 @@ export const PROFILE = {
   title: 'Middle Front-End Developer',
   orbitRole: 'Specialized in Real-Time UI Architecture & Micro-Frontends',
   summary:
-    'Frontend Developer with nearly 4 years of industry experience building scalable web and cross-platform desktop applications. Strong expertise in real-time UI architecture, high-frequency hardware data rendering, Micro-Frontends, and performance optimization. Proven ability to collaborate in international Agile teams (Singapore) and bridge frontend interfaces with native desktop/hardware services.',
+    'Frontend Developer with nearly 4 years of industry experience building scalable web and cross-platform desktop applications. Strong expertise in real-time UI architecture, high-frequency hardware data rendering, Micro-Frontends, and performance optimization. Currently collaborating with an international Agile team in Singapore, working closely across frontend interfaces, native desktop applications, and hardware services.',
   location: 'Ho Chi Minh City, Vietnam',
   coordinates: '10.8231° N, 106.6297° E',
   missionStatus: 'ACTIVE FLIGHT (ORBIT NOMINAL)',
