@@ -75,7 +75,7 @@ export const PROFILE = {
   github: 'https://github.com/pmd2902',
   githubUsername: 'pmd2902',
   linkedin: 'https://www.linkedin.com/in/pmd2902/',
-  cvPdfPath: '/resume-phan-minh-duc.pdf',
+  cvPdfPath: '/Phan_Minh_Duc_CV_Frontend_Developer.pdf',
   stats: [
     { label: 'FLIGHT EXPERIENCE', value: '4 yrs', desc: 'Industry engineering tenure' },
     { label: 'LAG REDUCTION', value: '~15%', desc: 'High-frequency telemetry optimization' },

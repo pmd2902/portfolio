@@ -5,7 +5,7 @@ import { useTheme } from '../context/ThemeContext'
 import { GithubIcon, LinkedinIcon } from './SocialIcons'
 import {
   X,
-  Printer,
+  ExternalLink,
   Download,
   Mail,
   Phone,
@@ -19,11 +19,38 @@ interface CVDossierModalProps {
 
 export const CVDossierModal: React.FC<CVDossierModalProps> = ({ isOpen, onClose }) => {
   const { isLight } = useTheme()
+  const [isDownloading, setIsDownloading] = React.useState(false)
+
   if (!isOpen) return null
 
-  const handlePrint = () => {
+  const handleDownloadPdf = async (e?: React.MouseEvent) => {
+    if (e) e.preventDefault()
     sound.playSuccess()
-    window.print()
+    setIsDownloading(true)
+    try {
+      const response = await fetch(PROFILE.cvPdfPath)
+      const blob = await response.blob()
+      const pdfBlob = new Blob([blob], { type: 'application/pdf' })
+      const url = window.URL.createObjectURL(pdfBlob)
+      const link = document.createElement('a')
+      link.style.display = 'none'
+      link.href = url
+      link.setAttribute('download', 'Phan_Minh_Duc_CV_Frontend_Developer.pdf')
+      document.body.appendChild(link)
+      link.click()
+      setTimeout(() => {
+        document.body.removeChild(link)
+        window.URL.revokeObjectURL(url)
+        setIsDownloading(false)
+      }, 1000)
+    } catch (err) {
+      console.error('Download error:', err)
+      const fallbackLink = document.createElement('a')
+      fallbackLink.href = PROFILE.cvPdfPath
+      fallbackLink.setAttribute('download', 'Phan_Minh_Duc_CV_Frontend_Developer.pdf')
+      fallbackLink.click()
+      setIsDownloading(false)
+    }
   }
 
   return (
@@ -59,22 +86,38 @@ export const CVDossierModal: React.FC<CVDossierModalProps> = ({ isOpen, onClose 
 
           <div className="flex items-center gap-2">
             <button
-              onClick={handlePrint}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors flex items-center gap-1.5 cursor-pointer ${
+              onClick={handleDownloadPdf}
+              disabled={isDownloading}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs ${
                 isLight
-                  ? 'bg-amber-600 text-white hover:bg-amber-500 shadow-xs'
+                  ? 'bg-amber-600 text-white hover:bg-amber-500'
                   : 'bg-sky-400 text-slate-950 hover:bg-sky-300'
               }`}
+              title="Tải trực tiếp file CV PDF chính thức"
             >
-              <Printer className="w-3.5 h-3.5" />
-              <span>Print / Save PDF</span>
+              <Download className="w-3.5 h-3.5" />
+              <span>{isDownloading ? 'Downloading...' : 'Download Official PDF'}</span>
             </button>
+            <a
+              href={PROFILE.cvPdfPath}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => sound.playSuccess()}
+              className={`p-1.5 rounded-lg border transition-colors flex items-center justify-center ${
+                isLight
+                  ? 'border-amber-200 text-slate-600 hover:text-slate-900 hover:border-amber-400'
+                  : 'border-slate-800 text-slate-400 hover:text-white hover:border-sky-400'
+              }`}
+              title="Xem trước file PDF trên tab mới"
+            >
+              <ExternalLink className="w-4 h-4" />
+            </a>
             <button
               onClick={() => {
                 sound.playBlip(600)
                 onClose()
               }}
-              className={`p-1.5 rounded-lg border transition-colors ${
+              className={`p-1.5 rounded-lg border transition-colors cursor-pointer ${
                 isLight
                   ? 'border-amber-200 text-slate-600 hover:text-slate-900 hover:border-amber-400'
                   : 'border-slate-800 text-slate-400 hover:text-white hover:border-sky-400'
@@ -334,21 +377,22 @@ export const CVDossierModal: React.FC<CVDossierModalProps> = ({ isOpen, onClose 
           </div>
         </div>
 
-        {/* Footer print action */}
+        {/* Footer download action */}
         <div
-          className={`pt-4 border-t flex justify-between items-center text-xs font-mono ${
+          className={`pt-4 border-t flex flex-wrap justify-between items-center gap-3 text-xs font-mono ${
             isLight ? 'border-amber-200 text-slate-500' : 'border-slate-800 text-slate-400'
           }`}
         >
-          <span>Single Source of Truth &bull; Phan Minh Duc</span>
+          <span>Official CV Dossier &bull; Phan Minh Duc</span>
           <button
-            onClick={handlePrint}
-            className={`flex items-center gap-1 underline cursor-pointer ${
+            onClick={handleDownloadPdf}
+            disabled={isDownloading}
+            className={`flex items-center gap-1.5 underline cursor-pointer font-medium ${
               isLight ? 'text-amber-700 hover:text-amber-800' : 'text-sky-400 hover:text-sky-300'
             }`}
           >
             <Download className="w-3.5 h-3.5" />
-            Save as PDF / Print
+            {isDownloading ? 'Downloading PDF...' : 'Download Official CV (PDF)'}
           </button>
         </div>
       </div>
