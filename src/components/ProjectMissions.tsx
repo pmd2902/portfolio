@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { PROJECTS_DATA } from '../data/profile'
 import type { ProjectMission } from '../data/profile'
 import { sound } from '../lib/sound'
@@ -19,6 +19,25 @@ import { REAL_TECH_ICON_MAP } from './TechIcons'
 export const ProjectMissions: React.FC = () => {
   const { isLight } = useTheme()
   const [selectedMission, setSelectedMission] = useState<ProjectMission | null>(null)
+
+  // Accessibility: Escape key listener & background scroll lock
+  useEffect(() => {
+    if (!selectedMission) return
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        sound.playBlip(600)
+        setSelectedMission(null)
+      }
+    }
+    const originalOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.body.style.overflow = originalOverflow
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [selectedMission])
 
   const handleOpenCaseStudy = (mission: ProjectMission) => {
     sound.playTransmission()
@@ -82,8 +101,18 @@ export const ProjectMissions: React.FC = () => {
             return (
               <div
                 key={mission.id}
+                role="button"
+                tabIndex={0}
+                aria-haspopup="dialog"
+                aria-label={`Xem chi tiết case study dự án ${mission.name}`}
                 onClick={() => handleOpenCaseStudy(mission)}
-                className={`group rounded-2xl border p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 cursor-pointer ${
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    handleOpenCaseStudy(mission)
+                  }
+                }}
+                className={`group rounded-2xl border p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 ${
                   isLight
                     ? 'bg-white hover:bg-amber-50/20 border-amber-200/90 hover:border-amber-400 shadow-sm hover:shadow-xl hover:-translate-y-1'
                     : 'glass-panel border-sky-500/20 hover:border-sky-400/60 hover:shadow-2xl hover:shadow-sky-950/60 hover:-translate-y-1'
@@ -227,11 +256,15 @@ export const ProjectMissions: React.FC = () => {
         {/* Detailed Case Study Modal */}
         {selectedMission && (
           <div
+            onClick={handleCloseCaseStudy}
             className={`fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-xl animate-fade-in overflow-y-auto ${
               isLight ? 'bg-black/40 backdrop-blur-sm' : 'bg-[#020617]/90'
             }`}
           >
             <div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="case-study-title"
               className={`relative w-full max-w-3xl rounded-2xl border p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto my-8 shadow-2xl ${
                 isLight
                   ? 'bg-[#fdfbf7] text-slate-900 border-amber-300 shadow-amber-950/20'
@@ -242,12 +275,13 @@ export const ProjectMissions: React.FC = () => {
               {/* Close Button */}
               <button
                 onClick={handleCloseCaseStudy}
-                className={`absolute top-6 right-6 p-2 rounded-lg border transition-colors cursor-pointer ${
+                title="Đóng Case Study (Esc)"
+                aria-label="Đóng Case Study"
+                className={`absolute top-6 right-6 min-w-[40px] min-h-[40px] p-2 rounded-lg border transition-colors flex items-center justify-center cursor-pointer ${
                   isLight
-                    ? 'border-amber-200 text-slate-500 hover:text-slate-900 hover:border-amber-400 bg-white'
+                    ? 'border-amber-200 text-slate-500 hover:text-slate-900 hover:border-amber-400 bg-white shadow-xs'
                     : 'border-slate-800 text-slate-400 hover:text-white hover:border-sky-400'
                 }`}
-                aria-label="Close Case Study"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -264,7 +298,7 @@ export const ProjectMissions: React.FC = () => {
                   <Radio className="w-3.5 h-3.5 text-emerald-500 animate-pulse" />
                   <span>CASE STUDY DOSSIER: {selectedMission.code}</span>
                 </div>
-                <h3 className={`text-2xl sm:text-3xl font-heading font-bold ${isLight ? 'text-slate-900' : 'text-white'}`}>
+                <h3 id="case-study-title" className={`text-2xl sm:text-3xl font-heading font-bold ${isLight ? 'text-slate-900' : 'text-white'}`}>
                   {selectedMission.name}
                 </h3>
                 <p className={`text-sm font-mono ${isLight ? 'text-amber-700 font-semibold' : 'text-sky-300'}`}>

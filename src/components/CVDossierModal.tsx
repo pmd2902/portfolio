@@ -21,6 +21,25 @@ export const CVDossierModal: React.FC<CVDossierModalProps> = ({ isOpen, onClose 
   const { isLight } = useTheme()
   const [isDownloading, setIsDownloading] = React.useState(false)
 
+  // Accessibility: Escape key dismiss & background scroll lock
+  React.useEffect(() => {
+    if (!isOpen) return
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        sound.playBlip(600)
+        onClose()
+      }
+    }
+    const originalOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.body.style.overflow = originalOverflow
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isOpen, onClose])
+
   if (!isOpen) return null
 
   const handleDownloadPdf = async (e?: React.MouseEvent) => {
@@ -55,11 +74,15 @@ export const CVDossierModal: React.FC<CVDossierModalProps> = ({ isOpen, onClose 
 
   return (
     <div
+      onClick={onClose}
       className={`fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 animate-fade-in overflow-y-auto ${
         isLight ? 'bg-black/40 backdrop-blur-sm' : 'bg-[#020617]/90 backdrop-blur-xl'
       }`}
     >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="cv-dossier-heading"
         className={`relative w-full max-w-4xl rounded-2xl border p-6 sm:p-10 my-8 shadow-2xl max-h-[90vh] overflow-y-auto space-y-8 transition-colors ${
           isLight
             ? 'bg-[#fdfbf7] border-amber-300 text-slate-900'
@@ -74,8 +97,9 @@ export const CVDossierModal: React.FC<CVDossierModalProps> = ({ isOpen, onClose 
           }`}
         >
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
             <span
+              id="cv-dossier-heading"
               className={`font-mono text-xs uppercase font-semibold tracking-wider ${
                 isLight ? 'text-amber-700' : 'text-sky-400'
               }`}
@@ -88,12 +112,13 @@ export const CVDossierModal: React.FC<CVDossierModalProps> = ({ isOpen, onClose 
             <button
               onClick={handleDownloadPdf}
               disabled={isDownloading}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs ${
+              className={`min-h-[38px] px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs ${
                 isLight
                   ? 'bg-amber-600 text-white hover:bg-amber-500'
                   : 'bg-sky-400 text-slate-950 hover:bg-sky-300'
               }`}
               title="Tải trực tiếp file CV PDF chính thức"
+              aria-label="Tải trực tiếp file CV PDF chính thức"
             >
               <Download className="w-3.5 h-3.5" />
               <span>{isDownloading ? 'Downloading...' : 'Download Official PDF'}</span>
@@ -103,12 +128,13 @@ export const CVDossierModal: React.FC<CVDossierModalProps> = ({ isOpen, onClose 
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => sound.playSuccess()}
-              className={`p-1.5 rounded-lg border transition-colors flex items-center justify-center ${
+              className={`min-w-[38px] min-h-[38px] p-2 rounded-lg border transition-colors flex items-center justify-center ${
                 isLight
                   ? 'border-amber-200 text-slate-600 hover:text-slate-900 hover:border-amber-400'
                   : 'border-slate-800 text-slate-400 hover:text-white hover:border-sky-400'
               }`}
               title="Xem trước file PDF trên tab mới"
+              aria-label="Xem trước file PDF trên tab mới"
             >
               <ExternalLink className="w-4 h-4" />
             </a>
@@ -117,7 +143,9 @@ export const CVDossierModal: React.FC<CVDossierModalProps> = ({ isOpen, onClose 
                 sound.playBlip(600)
                 onClose()
               }}
-              className={`p-1.5 rounded-lg border transition-colors cursor-pointer ${
+              title="Đóng CV Dossier (Esc)"
+              aria-label="Đóng CV Dossier"
+              className={`min-w-[38px] min-h-[38px] p-2 rounded-lg border transition-colors flex items-center justify-center cursor-pointer ${
                 isLight
                   ? 'border-amber-200 text-slate-600 hover:text-slate-900 hover:border-amber-400'
                   : 'border-slate-800 text-slate-400 hover:text-white hover:border-sky-400'

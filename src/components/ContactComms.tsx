@@ -23,6 +23,7 @@ export const ContactComms: React.FC = () => {
   const [senderName, setSenderName] = useState('')
   const [senderEmail, setSenderEmail] = useState('')
   const [message, setMessage] = useState('')
+  const [isTransmitting, setIsTransmitting] = useState(false)
   const [transmissionStatus, setTransmissionStatus] = useState<string | null>(null)
 
   const handleCopy = (text: string, type: 'email' | 'phone') => {
@@ -40,6 +41,8 @@ export const ContactComms: React.FC = () => {
 
   const handleDispatch = (e: React.FormEvent) => {
     e.preventDefault()
+    if (isTransmitting) return
+    setIsTransmitting(true)
     sound.playSuccess()
     setTransmissionStatus('ENCRYPTING & TRANSMITTING VIA ORBITAL RELAY...')
 
@@ -60,6 +63,10 @@ export const ContactComms: React.FC = () => {
       window.location.href = `mailto:${PROFILE.email}?subject=${subject}&body=${body}`
 
       setTransmissionStatus('TRANSMISSION DISPATCHED TO PMDPHAN@GMAIL.COM ✓')
+      setIsTransmitting(false)
+      setSenderName('')
+      setSenderEmail('')
+      setMessage('')
       setTimeout(() => setTransmissionStatus(null), 5000)
     }, 1200)
   }
@@ -184,7 +191,8 @@ export const ContactComms: React.FC = () => {
                 </a>
                 <button
                   onClick={() => handleCopy(PROFILE.email, 'email')}
-                  className={`px-3 py-1.5 rounded-lg border text-xs font-mono flex items-center gap-1.5 transition-colors cursor-pointer shrink-0 ${isLight
+                  aria-label="Sao chép email vào clipboard"
+                  className={`min-h-[38px] px-3 py-1.5 rounded-lg border text-xs font-mono flex items-center gap-1.5 transition-colors cursor-pointer shrink-0 ${isLight
                       ? 'border-amber-300 bg-amber-100 hover:bg-amber-200 text-amber-900'
                       : 'border-slate-700 bg-slate-800 hover:bg-sky-500/20 text-slate-300 hover:text-sky-300'
                     }`}
@@ -237,7 +245,8 @@ export const ContactComms: React.FC = () => {
                 </a>
                 <button
                   onClick={() => handleCopy(PROFILE.phoneRaw, 'phone')}
-                  className={`px-3 py-1.5 rounded-lg border text-xs font-mono flex items-center gap-1.5 transition-colors cursor-pointer shrink-0 ${isLight
+                  aria-label="Sao chép số điện thoại vào clipboard"
+                  className={`min-h-[38px] px-3 py-1.5 rounded-lg border text-xs font-mono flex items-center gap-1.5 transition-colors cursor-pointer shrink-0 ${isLight
                       ? 'border-amber-300 bg-amber-100 hover:bg-amber-200 text-amber-900'
                       : 'border-slate-700 bg-slate-800 hover:bg-sky-500/20 text-slate-300 hover:text-sky-300'
                     }`}
@@ -366,18 +375,21 @@ export const ContactComms: React.FC = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <label
-                      className={`text-xs font-mono ${isLight ? 'text-slate-700 font-medium' : 'text-slate-300'
+                      htmlFor="contact-sender-name"
+                      className={`text-xs font-mono cursor-pointer ${isLight ? 'text-slate-700 font-medium' : 'text-slate-300'
                         }`}
                     >
-                      EXPLORER / CALLSIGN
+                      EXPLORER / CALLSIGN <span className="text-rose-500">*</span>
                     </label>
                     <input
+                      id="contact-sender-name"
                       type="text"
                       required
                       placeholder="Your Name / Team"
                       value={senderName}
                       onChange={(e) => setSenderName(e.target.value)}
-                      className={`w-full px-3.5 py-2.5 rounded-lg border text-sm font-mono transition-colors focus:outline-none ${isLight
+                      disabled={isTransmitting}
+                      className={`w-full px-3.5 py-2.5 rounded-lg border text-sm font-mono transition-colors focus:outline-none disabled:opacity-60 ${isLight
                           ? 'bg-amber-50/50 border-amber-200 text-slate-900 placeholder:text-slate-400 focus:border-amber-500'
                           : 'bg-slate-900/80 border-slate-800 focus:border-sky-400 text-white placeholder:text-slate-600'
                         }`}
@@ -386,18 +398,21 @@ export const ContactComms: React.FC = () => {
 
                   <div className="space-y-1.5">
                     <label
-                      className={`text-xs font-mono ${isLight ? 'text-slate-700 font-medium' : 'text-slate-300'
+                      htmlFor="contact-sender-email"
+                      className={`text-xs font-mono cursor-pointer ${isLight ? 'text-slate-700 font-medium' : 'text-slate-300'
                         }`}
                     >
-                      RETURN FREQUENCY (EMAIL)
+                      RETURN FREQUENCY (EMAIL) <span className="text-rose-500">*</span>
                     </label>
                     <input
+                      id="contact-sender-email"
                       type="email"
                       required
                       placeholder="your.email@domain.com"
                       value={senderEmail}
                       onChange={(e) => setSenderEmail(e.target.value)}
-                      className={`w-full px-3.5 py-2.5 rounded-lg border text-sm font-mono transition-colors focus:outline-none ${isLight
+                      disabled={isTransmitting}
+                      className={`w-full px-3.5 py-2.5 rounded-lg border text-sm font-mono transition-colors focus:outline-none disabled:opacity-60 ${isLight
                           ? 'bg-amber-50/50 border-amber-200 text-slate-900 placeholder:text-slate-400 focus:border-amber-500'
                           : 'bg-slate-900/80 border-slate-800 focus:border-sky-400 text-white placeholder:text-slate-600'
                         }`}
@@ -407,18 +422,21 @@ export const ContactComms: React.FC = () => {
 
                 <div className="space-y-1.5">
                   <label
-                    className={`text-xs font-mono ${isLight ? 'text-slate-700 font-medium' : 'text-slate-300'
+                    htmlFor="contact-message"
+                    className={`text-xs font-mono cursor-pointer ${isLight ? 'text-slate-700 font-medium' : 'text-slate-300'
                       }`}
                   >
-                    MISSION TRANSMISSION (MESSAGE)
+                    MISSION TRANSMISSION (MESSAGE) <span className="text-rose-500">*</span>
                   </label>
                   <textarea
+                    id="contact-message"
                     required
                     rows={4}
                     placeholder="Describe your project, role, or team requirements..."
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    className={`w-full px-3.5 py-2.5 rounded-lg border text-sm font-sans transition-colors resize-none focus:outline-none ${isLight
+                    disabled={isTransmitting}
+                    className={`w-full px-3.5 py-2.5 rounded-lg border text-sm font-sans transition-colors resize-none focus:outline-none disabled:opacity-60 ${isLight
                         ? 'bg-amber-50/50 border-amber-200 text-slate-900 placeholder:text-slate-400 focus:border-amber-500'
                         : 'bg-slate-900/80 border-slate-800 focus:border-sky-400 text-white placeholder:text-slate-600'
                       }`}
@@ -439,13 +457,23 @@ export const ContactComms: React.FC = () => {
 
                 <button
                   type="submit"
-                  className={`w-full py-3.5 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${isLight
+                  disabled={isTransmitting}
+                  className={`w-full py-3.5 rounded-xl font-mono text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed ${isLight
                       ? 'bg-amber-600 text-white hover:bg-amber-500 shadow-md shadow-amber-900/20'
                       : 'bg-sky-400 text-slate-950 hover:bg-sky-300 hover:shadow-[0_0_25px_rgba(56,189,248,0.45)]'
                     }`}
                 >
-                  <Send className="w-4 h-4" />
-                  TRANSMIT ORBITAL MESSAGE
+                  {isTransmitting ? (
+                    <>
+                      <Sparkles className="w-4 h-4 animate-spin text-white dark:text-slate-950" />
+                      <span>ENCRYPTING & DISPATCHING TRANSMISSION...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      <span>TRANSMIT ORBITAL MESSAGE</span>
+                    </>
+                  )}
                 </button>
               </form>
             </div>

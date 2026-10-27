@@ -50,6 +50,22 @@
     cursor: var(--cursor-pointer) !important;
   }
 
+  /* Standard text editing cursor for form fields */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="search"],
+  textarea {
+    cursor: text !important;
+  }
+
+  /* Preserve natural touch gestures on mobile / touch displays */
+  @media (pointer: coarse) {
+    html, body, a, button, [role="button"], .cursor-pointer {
+      cursor: auto !important;
+    }
+  }
+
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
   }
@@ -180,8 +196,23 @@ html.light .font-heading {
   color: #0f172a;
 }
 
-html.light .text-white {
+/* Standalone light mode text replacements (excluding vibrant buttons and badge pills) */
+html.light .text-white:not([class*="bg-amber"]):not([class*="bg-emerald"]):not([class*="bg-sky"]):not([class*="bg-rose"]):not([class*="bg-indigo"]):not([class*="bg-slate-900"]):not([class*="bg-black"]) {
   color: #0f172a !important;
+}
+
+/* Ensure solid/accent buttons and badge labels stay crisp white in light mode */
+html.light [class*="bg-amber-600"],
+html.light [class*="bg-amber-700"],
+html.light [class*="bg-emerald-600"],
+html.light [class*="bg-rose-600"] {
+  color: #ffffff !important;
+}
+html.light [class*="bg-amber-600"] .text-white,
+html.light [class*="bg-amber-700"] .text-white,
+html.light [class*="bg-emerald-600"] .text-white,
+html.light [class*="bg-rose-600"] .text-white {
+  color: #ffffff !important;
 }
 
 html.light .text-slate-100 {

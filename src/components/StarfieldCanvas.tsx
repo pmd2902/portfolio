@@ -178,13 +178,27 @@ export const StarfieldCanvas: React.FC = () => {
       }
 
       ctx.globalAlpha = 1
-      animationFrameId = requestAnimationFrame(render)
+      if (!document.hidden) {
+        animationFrameId = requestAnimationFrame(render)
+      }
     }
 
     render()
 
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        cancelAnimationFrame(animationFrameId)
+        animationFrameId = requestAnimationFrame(render)
+      } else {
+        cancelAnimationFrame(animationFrameId)
+      }
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+
     return () => {
       cancelAnimationFrame(animationFrameId)
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
       window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('resize', handleResize)
     }

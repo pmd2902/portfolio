@@ -51,54 +51,54 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Middle Column: Social Chips */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
           <a
             href={PROFILE.github}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub Profile"
-            className={`p-2 rounded-lg border transition-colors ${
+            className={`min-w-[44px] min-h-[44px] rounded-lg border transition-colors flex items-center justify-center ${
               isLight
                 ? 'bg-amber-100/80 border-amber-200 text-slate-700 hover:text-amber-700 hover:border-amber-400 shadow-xs'
                 : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white hover:border-sky-500/40'
             }`}
           >
-            <GithubIcon className="w-4 h-4" />
+            <GithubIcon className="w-5 h-5" />
           </a>
           <a
             href={PROFILE.linkedin}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn Profile"
-            className={`p-2 rounded-lg border transition-colors ${
+            className={`min-w-[44px] min-h-[44px] rounded-lg border transition-colors flex items-center justify-center ${
               isLight
                 ? 'bg-amber-100/80 border-amber-200 text-blue-600 hover:text-blue-700 hover:border-amber-400 shadow-xs'
                 : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-sky-300 hover:border-sky-500/40'
             }`}
           >
-            <LinkedinIcon className="w-4 h-4" />
+            <LinkedinIcon className="w-5 h-5" />
           </a>
           <a
             href={`mailto:${PROFILE.email}`}
             aria-label="Email Transmission"
-            className={`p-2 rounded-lg border transition-colors ${
+            className={`min-w-[44px] min-h-[44px] rounded-lg border transition-colors flex items-center justify-center ${
               isLight
                 ? 'bg-amber-100/80 border-amber-200 text-amber-700 hover:text-amber-900 hover:border-amber-400 shadow-xs'
                 : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-sky-300 hover:border-sky-500/40'
             }`}
           >
-            <Mail className="w-4 h-4" />
+            <Mail className="w-5 h-5" />
           </a>
           <a
             href={`tel:${PROFILE.phoneRaw}`}
             aria-label="Phone Frequency"
-            className={`p-2 rounded-lg border transition-colors ${
+            className={`min-w-[44px] min-h-[44px] rounded-lg border transition-colors flex items-center justify-center ${
               isLight
                 ? 'bg-amber-100/80 border-amber-200 text-emerald-700 hover:text-emerald-900 hover:border-amber-400 shadow-xs'
                 : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-sky-300 hover:border-sky-500/40'
             }`}
           >
-            <Phone className="w-4 h-4" />
+            <Phone className="w-5 h-5" />
           </a>
         </div>
 
@@ -114,7 +114,7 @@ export const Footer: React.FC = () => {
           <button
             onClick={scrollToTop}
             aria-label="Return to orbital top"
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-mono cursor-pointer transition-all ${
+            className={`min-h-[44px] flex items-center gap-1.5 px-3.5 py-2 rounded-lg border text-xs font-mono cursor-pointer transition-all ${
               isLight
                 ? 'border-amber-300 bg-amber-100 text-amber-800 hover:bg-amber-200 hover:text-amber-900 shadow-xs'
                 : 'border-sky-500/30 bg-sky-950/40 text-sky-300 hover:bg-sky-900/50 hover:text-white'

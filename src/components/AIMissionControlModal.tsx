@@ -69,6 +69,25 @@ export const AIMissionControlModal: React.FC<AIMissionControlModalProps> = ({
     }
   }, [messages, isOpen])
 
+  // Accessibility: Escape key dismiss & background scroll lock
+  useEffect(() => {
+    if (!isOpen) return
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        sound.playBlip(600)
+        onClose()
+      }
+    }
+    const originalOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.body.style.overflow = originalOverflow
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isOpen, onClose])
+
   if (!isOpen) return null
 
   const handleSaveApiKey = (e: React.FormEvent) => {
@@ -133,11 +152,15 @@ export const AIMissionControlModal: React.FC<AIMissionControlModalProps> = ({
 
   return (
     <div
+      onClick={onClose}
       className={`fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 animate-fade-in ${
         isLight ? 'bg-black/40 backdrop-blur-sm' : 'bg-[#020617]/90 backdrop-blur-xl'
       }`}
     >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="ai-mission-control-title"
         className={`relative w-full max-w-2xl h-[620px] max-h-[90vh] rounded-2xl border flex flex-col overflow-hidden shadow-2xl transition-all ${
           isLight
             ? 'bg-[#fdfbf7] border-amber-300 shadow-amber-900/10'
@@ -166,6 +189,7 @@ export const AIMissionControlModal: React.FC<AIMissionControlModalProps> = ({
             <div>
               <div className="flex items-center gap-2">
                 <h3
+                  id="ai-mission-control-title"
                   className={`font-heading font-bold text-sm sm:text-base ${
                     isLight ? 'text-slate-900' : 'text-white'
                   }`}
@@ -187,7 +211,8 @@ export const AIMissionControlModal: React.FC<AIMissionControlModalProps> = ({
             <button
               onClick={() => setShowKeyConfig(!showKeyConfig)}
               title="Cấu hình Google Gemini API Key để chat tự do"
-              className={`p-1.5 rounded-lg border text-xs font-mono flex items-center gap-1 transition-colors ${
+              aria-label="Cấu hình Google Gemini API Key"
+              className={`min-h-[38px] px-2.5 py-1.5 rounded-lg border text-xs font-mono flex items-center gap-1 transition-colors cursor-pointer ${
                 hasApiKey
                   ? 'border-emerald-500/40 bg-emerald-100/80 text-emerald-800'
                   : isLight
@@ -202,7 +227,8 @@ export const AIMissionControlModal: React.FC<AIMissionControlModalProps> = ({
             <button
               onClick={handleClear}
               title="Clear chat buffer"
-              className={`p-1.5 rounded-lg border transition-colors ${
+              aria-label="Xóa nội dung đoạn chat"
+              className={`min-w-[38px] min-h-[38px] p-2 rounded-lg border transition-colors flex items-center justify-center cursor-pointer ${
                 isLight
                   ? 'border-amber-200 bg-white text-slate-600 hover:text-slate-900 hover:border-amber-400 shadow-xs'
                   : 'border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
@@ -216,8 +242,9 @@ export const AIMissionControlModal: React.FC<AIMissionControlModalProps> = ({
                 sound.playBlip(600)
                 onClose()
               }}
-              title="Close modal"
-              className={`p-1.5 rounded-lg border transition-colors ${
+              title="Đóng hộp thoại (Esc)"
+              aria-label="Đóng hộp thoại AI Mission Control"
+              className={`min-w-[38px] min-h-[38px] p-2 rounded-lg border transition-colors flex items-center justify-center cursor-pointer ${
                 isLight
                   ? 'border-amber-200 bg-white text-slate-600 hover:text-slate-900 hover:border-amber-400 shadow-xs'
                   : 'border-slate-800 text-slate-400 hover:text-white hover:border-sky-400'
@@ -419,6 +446,7 @@ export const AIMissionControlModal: React.FC<AIMissionControlModalProps> = ({
           >
             <input
               type="text"
+              aria-label="Nhập câu hỏi kỹ thuật về kinh nghiệm của Đức"
               placeholder="Hỏi bất kỳ thông tin gì về kinh nghiệm, Synapse 4, kỹ năng của Đức..."
               value={input}
               onChange={(e) => setInput(e.target.value)}

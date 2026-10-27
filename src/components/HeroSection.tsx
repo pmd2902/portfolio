@@ -214,8 +214,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenCvModal }) => {
                 </a>
                 <button
                   onClick={(e) => handleCopy(PROFILE.email, 'email', e)}
-                  title="Copy email to clipboard"
-                  className={`px-2 py-1.5 border-l transition-colors cursor-pointer ${
+                  title="Sao chép email vào clipboard"
+                  aria-label="Sao chép email vào clipboard"
+                  className={`px-2.5 py-1.5 border-l transition-colors cursor-pointer min-h-[34px] flex items-center justify-center ${
                     isLight ? 'border-amber-200 hover:text-amber-700 text-slate-500' : 'border-slate-800 hover:text-sky-400 text-slate-400'
                   }`}
                 >
@@ -245,8 +246,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenCvModal }) => {
                 </a>
                 <button
                   onClick={(e) => handleCopy(PROFILE.phoneRaw, 'phone', e)}
-                  title="Copy phone to clipboard"
-                  className={`px-2 py-1.5 border-l transition-colors cursor-pointer ${
+                  title="Sao chép số điện thoại vào clipboard"
+                  aria-label="Sao chép số điện thoại vào clipboard"
+                  className={`px-2.5 py-1.5 border-l transition-colors cursor-pointer min-h-[34px] flex items-center justify-center ${
                     isLight ? 'border-amber-200 hover:text-amber-700 text-slate-500' : 'border-slate-800 hover:text-sky-400 text-slate-400'
                   }`}
                 >

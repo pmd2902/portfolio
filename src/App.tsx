@@ -27,6 +27,14 @@ function PortfolioContent() {
           : 'bg-[#020617] text-slate-100 selection:bg-sky-500/30 selection:text-sky-200'
       }`}
     >
+      {/* Accessible Keyboard Skip Link */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2.5 focus:rounded-lg focus:bg-amber-600 focus:text-white dark:focus:bg-sky-400 dark:focus:text-slate-950 focus:font-mono focus:text-xs focus:font-bold focus:shadow-2xl focus:outline-none"
+      >
+        Skip to main mission content
+      </a>
+
       {/* Dynamic Starfield Atmosphere */}
       <StarfieldCanvas />
 
@@ -37,7 +45,7 @@ function PortfolioContent() {
       />
 
       {/* Main Mission Journey Flow */}
-      <main className="relative z-10 flex flex-col">
+      <main id="main-content" className="relative z-10 flex flex-col">
         {/* Orbital Command Hero */}
         <HeroSection onOpenCvModal={() => setIsCvModalOpen(true)} />
 

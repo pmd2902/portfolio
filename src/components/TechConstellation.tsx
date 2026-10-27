@@ -16,6 +16,19 @@ export const TechConstellation: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All')
   const [activeSkill, setActiveSkill] = useState<SkillItem | null>(null)
 
+  // Accessibility: Escape key dismiss for active skill detail
+  React.useEffect(() => {
+    if (!activeSkill) return
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        sound.playBlip(600)
+        setActiveSkill(null)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [activeSkill])
+
   const categories = [
     'All',
     'Languages',
@@ -83,12 +96,13 @@ export const TechConstellation: React.FC = () => {
         </div>
 
         {/* Category Filter Pills */}
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Bộ lọc nhóm công nghệ">
           {categories.map((category) => {
             const isSelected = selectedCategory === category
             return (
               <button
                 key={category}
+                aria-pressed={isSelected}
                 onClick={() => {
                   sound.playBlip(700)
                   setSelectedCategory(category)
@@ -118,8 +132,18 @@ export const TechConstellation: React.FC = () => {
             return (
               <div
                 key={skill.name}
+                role="button"
+                tabIndex={0}
+                aria-pressed={isSelected}
+                aria-label={`Xem chi tiết công nghệ ${skill.name}`}
                 onClick={() => handleSkillClick(skill)}
-                className={`relative group p-4 rounded-xl border transition-all duration-300 cursor-pointer ${
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    handleSkillClick(skill)
+                  }
+                }}
+                className={`relative group p-4 rounded-xl border transition-all duration-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 ${
                   isSelected
                     ? isLight
                       ? 'bg-amber-50/80 border-amber-500 shadow-md shadow-amber-500/20'
@@ -214,10 +238,15 @@ export const TechConstellation: React.FC = () => {
             }`}
           >
             <button
-              onClick={() => setActiveSkill(null)}
-              className={`absolute top-5 right-5 p-1.5 rounded-lg border transition-colors cursor-pointer ${
+              onClick={() => {
+                sound.playBlip(600)
+                setActiveSkill(null)
+              }}
+              title="Đóng thông tin chi tiết (Esc)"
+              aria-label="Đóng thông tin chi tiết công nghệ"
+              className={`absolute top-5 right-5 min-w-[38px] min-h-[38px] p-2 rounded-lg border transition-colors flex items-center justify-center cursor-pointer ${
                 isLight
-                  ? 'border-amber-200 text-slate-500 hover:text-slate-900 hover:border-amber-400'
+                  ? 'border-amber-200 text-slate-500 hover:text-slate-900 hover:border-amber-400 bg-white shadow-xs'
                   : 'border-slate-800 text-slate-400 hover:text-white hover:border-sky-500/40'
               }`}
             >

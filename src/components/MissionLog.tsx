@@ -123,8 +123,19 @@ export const MissionLog: React.FC = () => {
                 >
                   {/* Card Header (Clickable to toggle) */}
                   <div
+                    role="button"
+                    tabIndex={0}
+                    aria-expanded={isExpanded}
+                    aria-controls={`mission-content-${mission.id}`}
+                    aria-label={`${isExpanded ? 'Thu gọn' : 'Mở rộng'} hồ sơ kinh nghiệm tại ${mission.company}`}
                     onClick={() => toggleExpand(mission.id)}
-                    className="p-5 sm:p-6 cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4 select-none"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault()
+                        toggleExpand(mission.id)
+                      }
+                    }}
+                    className="p-5 sm:p-6 cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4 select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-inset"
                   >
                     <div className="space-y-1">
                       <div className="flex flex-wrap items-center gap-2 font-mono text-xs">
@@ -202,6 +213,7 @@ export const MissionLog: React.FC = () => {
                   {/* Card Expanded Content */}
                   {isExpanded && (
                     <div
+                      id={`mission-content-${mission.id}`}
                       className={`px-5 sm:px-6 pb-6 pt-2 border-t space-y-6 animate-fade-in ${
                         isLight ? 'border-amber-200' : 'border-slate-800/80'
                       }`}
