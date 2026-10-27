@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+  <!-- Solar Plasma Flame -->
+  <path d="M16 16 L27 27 L22 22 L24 29 L18 20 Z" fill="#f59e0b" opacity="0.95"/>
+  <path d="M17 17 L23 23 L20 20 L22 25 L18 19 Z" fill="#ef4444"/>
+  
+  <!-- Left Wing Fin -->
+  <path d="M7 16 L4 23 L12 19 Z" fill="#fde68a" stroke="#d97706" stroke-width="1.5" stroke-linejoin="round"/>
+  
+  <!-- Right Wing Fin -->
+  <path d="M16 7 L23 4 L19 12 Z" fill="#fde68a" stroke="#d97706" stroke-width="1.5" stroke-linejoin="round"/>
+  
+  <!-- Main Rocket Fuselage -->
+  <path d="M3 3 C9 3 18 9 18 17 L17 18 C9 18 3 9 3 3 Z" fill="#fffbeb" stroke="#d97706" stroke-width="2" stroke-linejoin="round"/>
+  
+  <!-- Cockpit Glass Porthole -->
+  <circle cx="10" cy="10" r="2.2" fill="#d97706"/>
+  <circle cx="9.5" cy="9.5" r="0.8" fill="#ffffff"/>
+  
+  <!-- Precision Guidance Tip -->
+  <circle cx="3" cy="3" r="1.25" fill="#b45309"/>
+</svg>
